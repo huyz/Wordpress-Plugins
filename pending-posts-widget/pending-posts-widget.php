@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Pending Posts Widget
- * Plugin URI: http://www.boverie.eu
+ * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Un widget qui affiche la liste des articles en attente.
  * Version: 0.1
  * Author: Cédric Boverie

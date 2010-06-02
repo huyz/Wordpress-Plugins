@@ -3,13 +3,18 @@ Liste des plugins pour Wordpress sur ce dépôt
 [Télécharger tout](http://github.com/cedbv/Wordpress-Plugins/zipball/master)
 More Embeds 0.1
 ------------------------
-Auto-embed for sites that doesn’t support oEmbed (wat.tv,…).  
+Add provider for « Auto-Embed » feature (currently only Wat.tv).  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/more-embeds/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/more-embeds.zip)
 
 Pending Posts Widget 0.1
 ------------------------
 Un widget qui affiche la liste des articles en attente.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/pending-posts-widget/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/pending-posts-widget.zip)
+
+Plugins Developer 0.1
+------------------------
+Aide au développement de plugin pour Wordpress.  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/plugins-developer/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/plugins-developer.zip)
 
 Post Stats 0.2
 ------------------------

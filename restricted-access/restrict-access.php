@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Restrict Access
- * Plugin URI: http://www.boverie.eu/
+ * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Oblige à résoudre une énigme avant d'autoriser l'accès au blog.
  * Version: 0.1
  * Author: Cédric Boverie

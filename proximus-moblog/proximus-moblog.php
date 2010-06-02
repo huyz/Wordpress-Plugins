@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Proximus Moblog Sync
- * Plugin URI: http://www.boverie.eu/
+ * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Importe les articles d'un moblog Proximus dans Wordpress.
  * Version: 0.2.1
  * Author: Cédric Boverie

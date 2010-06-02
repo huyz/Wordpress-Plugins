@@ -1,8 +1,8 @@
 <?php
 /*
  * Plugin Name: More Embeds
- * Plugin URI: http://www.boverie.eu/
- * Description: Auto-embed for sites that doesn't support oEmbed (wat.tv,...).
+ * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
+ * Description: Add provider for "Auto-Embed" feature (currently only Wat.tv).
  * Version: 0.1
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- 
+
 // Pour les sites qui n'utilise pas oEmbed
 
 /* 

@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Post Stats
- * Plugin URI: http://www.boverie.eu/
+ * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Statistiques sur la longueur des articles sur le tableau de bord.
  * Version: 0.2
  * Author: Cédric Boverie
