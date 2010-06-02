@@ -138,7 +138,7 @@ margin-left:<?php echo rand(0,50); ?>%;
 </style>
 <?php
 wp_enqueue_script('jquery');
-wp_enqueue_script('md5_script',WP_PLUGIN_URL.'/restricted-access/files/md5.js');
+wp_enqueue_script('md5_script',WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)).'/files/md5.js');
 wp_head();
 ?>
 </head>

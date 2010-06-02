@@ -25,7 +25,7 @@
 add_action('admin_menu', 'plugins_dev_adminMenu');
 
 function plugins_dev_adminMenu() {
-    add_options_page('Plugin Developer', 'Plugin Developer', 'install_plugins', 'pluginsDeveloper', 'plugins_dev_mainPage');
+    add_plugins_page('Plugin Developer', 'Plugin Developer', 'install_plugins', 'pluginsDeveloper', 'plugins_dev_mainPage');
 }
 
 function plugins_dev_mainPage() {

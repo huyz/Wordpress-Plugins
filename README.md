@@ -21,9 +21,9 @@ Post Stats 0.2
 Statistiques sur la longueur des articles sur le tableau de bord.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/post-stats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/post-stats.zip)
 
-Proximus Moblog Sync 0.2.1
+Proximus Moblog Sync 0.3
 ------------------------
-Importe les articles d’un moblog Proximus dans Wordpress.  
+Republie les articles d’un moblog Proximus dans un blog Wordpress.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/proximus-moblog/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/proximus-moblog.zip)
 
 Restrict Access 0.1

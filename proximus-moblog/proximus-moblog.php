@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Proximus Moblog Sync
  * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
- * Description: Importe les articles d'un moblog Proximus dans Wordpress.
- * Version: 0.2.1
+ * Description: Republie les articles d'un moblog Proximus dans un blog Wordpress.
+ * Version: 0.3
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
  */
@@ -18,8 +18,7 @@
  * you should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
+*/
 
 // Ajouter un élément dans le menu d'administration
 add_action('admin_menu', 'proximusMoblogSync');
@@ -31,7 +30,6 @@ function proximusMoblogSync() {
 // Ajouter une action planifiée (cron)
 add_action('proximusMoblogSync_launchCron', 'proximusMoblogSync_cron');
 
-
 // Activer la tâche planifiée
 function proximusMoblogSync_activateCron() {
     wp_schedule_event(time(), 'hourly', 'proximusMoblogSync_launchCron');
@@ -42,92 +40,12 @@ function proximusMoblogSync_desactivateCron() {
     wp_clear_scheduled_hook('proximusMoblogSync_launchCron');
 }
 
-// La tache planifiée
-function proximusMoblogSync_cron() {
-
-    if(get_option('proximusMoblogSync_isrunning') == 1)
-        return 0;
-
-    global $wpdb;
-
-    $blogid = get_option('proximusMoblogSync_blogid');
-    $id = get_option('proximusMoblogSync_id');
-    $titre = get_option('proximusMoblogSync_titre');
-    $article = get_option('proximusMoblogSync_article');
-    $categorie = get_option('proximusMoblogSync_categorie');
-    $user = get_option('proximusMoblogSync_user');
-
-    if(!ctype_digit($id)) $id = 1; // Si l'id du prochain article est invalide, initialisé à 1
-
-    if (ctype_digit($blogid)) { // Identifiant valide
-
-        update_option('proximusMoblogSync_isrunning',1);
-
-        // Récupération du flux RSS
-        require_once (ABSPATH . WPINC . '/class-feed.php');
-        $rss = new SimplePie();
-        $rss->set_feed_url('http://payandgogeneration.proximus.be/moblogs/rss.cfm?id=' . $blogid);
-       
-        // Désactiver le cache
-        $rss->enable_cache(false);
-
-        // Désactivation du tri par défaut
-        $rss->enable_order_by_date(false);
-        $rss->init();
-        $rss->handle_content_type();
-
-        $maxitems = $rss->get_item_quantity(); // Nombre d'éléments du flux RSS
-        $rss_items = $rss->get_items(0, $maxitems); // Tableau des articles récupérés
-        $hackmin = 0; // Hack de décalage d'article pour ne pas avoir plusieurs articles publiés en même temps.
-
-        for ($i = $maxitems - 1; $i>=0; --$i) {
-
-            $item = $rss->get_item($i);
-
-            $guid = $item->get_id();
-            $guid = substr($guid, strpos($guid, '=') + 1);
-
-			//echo '<li>'.$guid.'</li>';
-			
-            $count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = 'proximusMoblog_guid' AND meta_value = '$guid'"));
-            if($count == 0)
-            {
-                $enclosure = $item->get_enclosure();
-                $image = $enclosure->get_link();
-                $title = str_replace('[id]',$id,$titre);
-                $contenu = str_replace('[image]',$image,$article);
-                $date = date('Y-m-d H:i:s',$item->get_date('U')+$hackmin);
-
-                // Create post object
-                $my_post = array();
-                $my_post['post_title'] = $title;
-                $my_post['post_content'] = $contenu;
-                $my_post['post_status'] = 'publish';
-                $my_post['post_date'] = $date;
-
-                if(!empty($user))
-                    $my_post['post_author'] = $user;
-                if(!empty($categorie))
-                    $my_post['post_category'] = array($categorie);
-
-                // Insert the post into the database
-                $postid = wp_insert_post($my_post);
-                add_post_meta($postid,'proximusMoblog_guid',$guid);
-                $id++;
-                $hackmin += 75;
-            }
-        }
-        update_option('proximusMoblogSync_id',$id);
-
-        update_option('proximusMoblogSync_isrunning',0);
-    } // Fin identifiant valide
-}
-
 // La page d'options
 function proximusMoblogSync_options() {
 
     if(isset($_POST['manualSync']))
     {
+        include(dirname(__FILE__).'/cron_function.php');
         proximusMoblogSync_cron();
         echo '<div id="setting-error-settings_updated" class="updated settings-error">
                 <p><strong>Les articles ont été récupérés.</strong></p></div>';
@@ -172,13 +90,13 @@ function proximusMoblogSync_options() {
     </tr>';
 
     echo '<tr valign="top">';
-    echo '<th scope="row">Tâche planifiée</th>
+    echo '<th scope="row">Tâche planifiée automatique (BETA)</th>
     <td>
         <select name="proximusMoblogSync_activate">
-            <option value="0">Désactiver</option>
+            <option value="0">OFF</option>
             <option ';
             if($activate == 1) echo 'selected="selected" ';
-            echo 'value="1">Activer</option>
+            echo 'value="1">ON</option>
         </select>
     </td>
     </tr>';
@@ -189,14 +107,12 @@ function proximusMoblogSync_options() {
     <td><input type="text" name="proximusMoblogSync_titre" value="' . $titre . '" size="60" /> (Template disponible : [id])</td>
     </tr>';
 
-
     echo '</tr>';
     echo '<tr valign="top">';
     echo '<th scope="row">Article</th>
     <td><textarea name="proximusMoblogSync_article" rows="7" cols="60">' . $article . '</textarea><br />
     Template disponible : [image]   </td>
     </tr>';
-
 
     echo '<tr valign="top">';
     echo '<th scope="row">Dans la catégorie</th>
@@ -212,7 +128,6 @@ function proximusMoblogSync_options() {
     echo '</td>
     </tr>';
 
-
     echo '</table>';
 
     echo '<input type="hidden" name="action" value="update" />';
@@ -220,24 +135,34 @@ function proximusMoblogSync_options() {
     echo '<p class="submit"><input type="submit" class="button-primary" value="' . __('Save Changes') . '" /></p>';
     echo '</form>';
 
-    // Confirmation du bon fonctionnement
-    echo  '<h3>Status</h3>';
+    echo '<h3>Tâche planifiée</h3>';
+
+    // Statut du cron via Wordpress
+    echo  '<h4>Via Wordpress</h4>';
     echo '<p>';
-    $status = wp_get_schedule('proximusMoblogSync_launchCron');
-    if(!empty($status))
+    $proximoblog_status = wp_get_schedule('proximusMoblogSync_launchCron');
+    if(!empty($proximoblog_status))
     {
         echo 'Les articles sont automatiquement récupérés ';
-        $tab = wp_get_schedules();
-        echo strtolower($tab[$status]['display']).'.';
+        $proximoblog_tab = wp_get_schedules();
+        echo strtolower($proximoblog_tab[$proximoblog_status]['display']).'.';
+        echo '<br />En cas de problèmes (doublons, articles mal classés), désactivez la tâche planifiée automatique et utilisez la tâche manuelle.';
     }
     else
-        echo 'La récupération automatique des articles est désactivées.';
+        echo 'La récupération automatique des articles est désactivée.<br />Il est recommandé de l\'activer uniquement si vous n\'avez pas accès à une crontab ou équivalent.';
     echo '</p>';
-    
-    echo '<form action="options-general.php?page=proximusMoblogSync" method="post">';
-    echo '<p class="submit"><input type="submit" name="manualSync" class="button-primary" value="Charger les nouveaux articles manuellement" /></p>';
-    echo '</form>';
 
+    echo '<h4>Manuel</h4>';
+    echo '<p>A ajouter dans votre crontab :</p>';
+    echo '<p>';
+    $proximoblog_cron_url = WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)).'/cron.php';
+    echo 'Chemin physique : '.dirname(__FILE__).'/cron.php<br />';
+    echo 'URI : '.$proximoblog_cron_url;
+    echo '</p>';
+
+    echo '<form action="options-general.php?page=proximusMoblogSync" method="post">';
+    echo '<p class="submit"><input type="submit" name="manualSync" class="button-primary" value="Charger les nouveaux articles maintenant" /></p>';
+    echo '</form>';
 
     echo '</div>';
 }
