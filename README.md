@@ -1,6 +1,11 @@
 Liste des plugins pour Wordpress sur ce dépôt
 =============================================
 [Télécharger tout](http://github.com/cedbv/Wordpress-Plugins/zipball/master)
+Lightbox Post Preview 0.1
+------------------------
+Affiche l’aperçu d’un article dans une lightbox.  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/lightbox-post-preview/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/lightbox-post-preview.zip)
+
 More Embeds 0.1
 ------------------------
 Add provider for « Auto-Embed » feature (currently only Wat.tv).  
