@@ -25,7 +25,7 @@ define('POSTSTATS_READINGSPEED',200);
 
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
 
- // Create the function to output the contents of our Dashboard Widget
+ // Create the function to output the contents of the widget
 function PostStats_widget_function() {
 	global $wpdb;
 	$nb_mots_totaux = $wpdb->get_var("SELECT SUM(LENGTH(post_content) - LENGTH(REPLACE(post_content,' ',''))+1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post'");
@@ -117,8 +117,9 @@ function PostStats_periodl10n($period,$nb) {
     }
 }
 
+// Ajoute les statistiques au début de chaque post
 function PostStats_postContent($content) {
-    $nb_words = str_word_count($content);
+    $nb_words = str_word_count(strip_tags($content));
     $before_content = '<p class="poststats">';
     $before_content .= sprintf(__('This post has %d words.'),$nb_words);
     $before_content .= ' ';
@@ -126,6 +127,11 @@ function PostStats_postContent($content) {
                                 PostStats_format_time($nb_words/POSTSTATS_READINGSPEED*60));
     $before_content .= '</p>';
     return $before_content.$content;
+}
+
+// On supprime les 2 premières phrase du excerpt (Ugly fix...)
+function PostStats_excerptFix($content) {
+    return substr($content,strpos($content,'.',strpos($content,'.')+1)+1);
 }
 
 /* Dashboard Widget */
@@ -141,7 +147,10 @@ add_action('widgets_init', create_function('', 'return register_widget("PostStat
 
 // Ajoute le nombre de mots + estimation du temps de lecture avant le post
 if(get_option('poststats_content') == 'on')
+{
     add_filter('the_content', 'PostStats_postContent');
+    add_filter('the_excerpt','PostStats_excerptFix',0);
+}
 
 if(is_admin()) // Register admin action
 {
@@ -197,9 +206,6 @@ function PostStats_options() {
     echo '<p class="submit">
     <input type="submit" class="button-primary" value="'.__('Save Changes').'" />
     </p>';
-
-    
-
 
     echo '</form>';
     echo '</div>';
