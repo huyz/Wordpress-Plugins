@@ -46,8 +46,9 @@ jQuery(document).ready(function($) {
 }
 
 function lightbox_admin_active() {
-	$page = basename($_SERVER['SCRIPT_NAME']);
-	if($page == 'post-new.php' || $page == 'post.php')
+    global $pagenow;
+	//$pagenow = basename($_SERVER['SCRIPT_NAME']);
+	if($pagenow == 'post-new.php' || $pagenow == 'post.php')
 		return true;
 	
 	return false;
