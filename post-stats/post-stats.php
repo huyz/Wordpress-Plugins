@@ -24,7 +24,7 @@ define('POSTSTATS_TEXTDOMAIN','post-stats');
 define('POSTSTATS_READINGSPEED',200);
 
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
- 
+
  // Create the function to output the contents of our Dashboard Widget
 function PostStats_widget_function() {
 	global $wpdb;
@@ -54,9 +54,9 @@ function PostStats_widget_function() {
 
 	echo '<p>';
 	if(is_object($longest))
-	echo __('Longest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($longest->ID).'">'.$longest->post_title.'</a><br />';
+            echo __('Longest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($longest->ID).'">'.$longest->post_title.'</a><br />';
 	if(is_object($shortest))
-	echo __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
+            echo __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
 	echo '</p>';
 
         $reading_time = PostStats_format_time($nb_mots_totaux/POSTSTATS_READINGSPEED*60);
@@ -65,18 +65,18 @@ function PostStats_widget_function() {
         echo '<p>';
         echo __('Total reading time: ',POSTSTATS_TEXTDOMAIN).$reading_time;
         echo '</p>';
-
 }
+
 // Transforme un temps en secondes en un temps compréhensible par un humain
 function PostStats_format_time($time) {
 
    $periods = array(
-       __('years',POSTSTATS_TEXTDOMAIN) => 86400*365,
-       __('months',POSTSTATS_TEXTDOMAIN) => 86400*31,
-       __('days',POSTSTATS_TEXTDOMAIN) => 86400,
-       __('hours',POSTSTATS_TEXTDOMAIN) => 3600,
-       __('minutes',POSTSTATS_TEXTDOMAIN) => 60,
-       __('secondes',POSTSTATS_TEXTDOMAIN) => 1,
+       'years' => 86400*365,
+       'months' => 86400*31,
+       'days' => 86400,
+       'hours' => 3600,
+       'minutes' => 60,
+       'secondes' => 1,
    );
 
    $reading = array();
@@ -87,22 +87,121 @@ function PostStats_format_time($time) {
        {
            $nb = floor($time/$duration);
            $time -= $nb*$duration;
-           $reading[] = $nb.' '.$period;
+           $reading[] = $nb.' '.PostStats_periodl10n($period,$nb);
        }
    }
 
     return implode(', ',$reading);
 }
 
+function PostStats_periodl10n($period,$nb) {
+    switch($period) {
+        case 'years':
+            return _n('year','years',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+        case 'months':
+            return _n('month','months',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+        case 'days':
+            return _n('day','days',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+        case 'hours':
+            return _n('hour','hours',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+        case 'minutes':
+            return _n('minute','minutes',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+        case 'secondes':
+            return _n('seconde','secondes',$nb,POSTSTATS_TEXTDOMAIN);
+        break;
+    }
+}
+
+function PostStats_postContent($content) {
+    $nb_words = str_word_count($content);
+    $before_content = '<p class="poststats">';
+    $before_content .= sprintf(__('This post has %d words.'),$nb_words);
+    $before_content .= ' ';
+    $before_content .= sprintf(__('That will take approximatively %s for reading it.'),
+                                PostStats_format_time($nb_words/POSTSTATS_READINGSPEED*60));
+    $before_content .= '</p>';
+    return $before_content.$content;
+}
+
 /* Dashboard Widget */
 // Create the function use in the action hook
 function PostStats_add_dashboard_widgets() {
-    wp_add_dashboard_widget('example_dashboard_widget', __('Posts Statistics',POSTSTATS_TEXTDOMAIN), 'PostStats_widget_function');
+    if(get_option('poststats_dashboard') == 'on')
+        wp_add_dashboard_widget('example_dashboard_widget', __('Posts Statistics',POSTSTATS_TEXTDOMAIN), 'PostStats_widget_function');
 }
-// Hook into the 'wp_dashboard_setup' action to register our other functions
-add_action('wp_dashboard_setup', 'PostStats_add_dashboard_widgets' );
-
 
 /* Sidebar Widget */
 require_once(dirname(__FILE__).'/PostStats_Widget.php');
 add_action('widgets_init', create_function('', 'return register_widget("PostStats_Widget");'));
+
+// Ajoute le nombre de mots + estimation du temps de lecture avant le post
+if(get_option('poststats_content') == 'on')
+    add_filter('the_content', 'PostStats_postContent');
+
+if(is_admin()) // Register admin action
+{
+    // Register dashboard widget
+    add_action('wp_dashboard_setup', 'PostStats_add_dashboard_widgets');
+    
+    // Register admin menu
+    add_action('admin_menu', 'PostStats_menu');
+
+    // Register option settings
+    add_action('admin_init', 'PostStats_register_settings');
+}
+
+function PostStats_register_settings() {
+    register_setting('poststats_settings', 'poststats_content');
+    register_setting('poststats_settings', 'poststats_dashboard');
+}
+
+function PostStats_menu() {
+  add_options_page('PostStats', 'PostStats', 'manage_options', 'poststats', 'PostStats_options');
+}
+
+function PostStats_options() {
+    echo '<div class="wrap">';
+    echo '<h2>PostStats</h2>';
+
+    echo '<form method="post" action="options.php">';
+    settings_fields('poststats_settings');
+    echo '<table class="form-table">';
+
+    if(get_option('poststats_content') == 'on') $value = 'checked="checked"';
+    else $value = '';
+    
+    echo '<tr valign="top">
+    <th scope="row">
+    <label for="poststats_content">Afficher les statistiques au début de chaque article</label>
+    </th><td>
+    <input type="checkbox" id="poststats_content" name="poststats_content" '.$value.'" />
+    </td></tr>';
+    
+    if(get_option('poststats_dashboard') == 'on') $value = 'checked="checked"';
+    else $value = '';
+
+    echo '<tr valign="top">
+    <th scope="row">
+    <label for="poststats_dashboard">Afficher le widget sur le dashboard</label>
+    </th><td>
+    <input type="checkbox" id="poststats_dashboard" name="poststats_dashboard" '.$value.'" />
+    </td></tr>';
+
+    echo '</table>';
+
+    echo '<p class="submit">
+    <input type="submit" class="button-primary" value="'.__('Save Changes').'" />
+    </p>';
+
+    
+
+
+    echo '</form>';
+    echo '</div>';
+}
+?>
