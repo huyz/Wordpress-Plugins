@@ -123,7 +123,7 @@ function PostStats_postContent($content) {
     $before_content = '<p class="poststats">';
     $before_content .= sprintf(__('This post has %d words.'),$nb_words);
     $before_content .= ' ';
-    $before_content .= sprintf(__('That will take approximatively %s for reading it.'),
+    $before_content .= sprintf(__('It will take approximately %s for reading it.'),
                                 PostStats_format_time($nb_words/POSTSTATS_READINGSPEED*60));
     $before_content .= '</p>';
     return $before_content.$content;

@@ -63,10 +63,10 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 					if(!empty($_SERVER['GEOIP_COUNTRY_NAME']))
 						$infosclient .= 'Localisation : '.utf8_encode($_SERVER['GEOIP_CITY']).', '.$_SERVER['GEOIP_COUNTRY_NAME'].' (<a href="http://maps.google.com/maps?q='.$_SERVER['GEOIP_LATITUDE'].','.$_SERVER['GEOIP_LONGITUDE'].'">carte</a>)<br />';
 					
-					require_once(dirname(__FILE__).'/libs/user.class.php');
+					require_once(dirname(__FILE__).'/libs/useragent.class.php');
 					$ua = new UserAgent();
 					
-					$infosclient .= 'User-agent : '.$ua->getUserAgent().' '.$ua->g.'<br />';
+					$infosclient .= 'User-agent : '.$ua->getUserAgent().'<br />';
 					$infosclient .= 'Navigateur : '.$ua->getBrowser().' '.$ua->getBrowserVersion().'<br />';
 					$infosclient .= 'OS : '.$ua->getOS().'</p>';
 					
@@ -88,68 +88,28 @@ if(!is_user_logged_in())
 $aleatoire = range(0,$count-1);
 shuffle($aleatoire);
 header('HTTP/1.1 401 Unauthorized');
-?><!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php bloginfo('language'); ?>" lang="<?php bloginfo('language'); ?>">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo('charset'); ?>" />
-    <title><?php bloginfo('name'); ?> : Accès restreint</title>
-<style type="text/css">
-body {
-background-color:#326B9F;
-color:#050A0F;
-font-family:"Lucida Grande", "Lucida Sans Unicode", sans-serif;
-background-image:url('<?php echo WP_PLUGIN_URL; ?>/restricted-access/files/bg.png');
-background-repeat:repeat-x;
-}	
 
-h1 {
-margin-top:1.5em;
-color:white;
-text-align:center;
-font-size:3em;
-font-family:Georgia, serif;
+if(!is_home()) // Message d'erreur ailleurs que sur la home
+{
+	get_header();
+	echo '<div id="container"><div id="content">';
+	echo '<p>Désolé, cette page n\'est pas publique.<br />
+			Vous pouvez vous connecter à partir de <a href="">la page d\'accueil</a>.</p>';
+	echo '</div></div>';
+	get_footer();
+	exit;
 }
 
-h1 a {
-color:white;
-text-decoration:none;
-}
-
-#content {
-padding:10px 10px;
-background-color:white;
-width:50%;
-margin:auto;
--moz-border-radius:10px;
--webkit-border-radius:10px;
-border-radius:10px;
-}
-
-#unlock {
-margin-left:<?php echo rand(0,50); ?>%;
-}
-
-#helplink {
-	cursor:pointer;
-}
-
-.vert {color: green;}
-.rouge {color: red;}
-</style>
-<?php
 wp_enqueue_script('jquery');
-wp_enqueue_script('md5_script',WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)).'/files/md5.js');
-wp_head();
+wp_enqueue_script('md5_script',WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)).'/files/md5.js',false,'1.0');
+get_header();
 ?>
-</head>
-<body>
-<h1><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
-
+<div id="container">
 <div id="content">
 <h2>Identifiez-vous</h2>
 <form id="formulaire" action="" method="post">
 <p>
-<label for="nom">Quel est votre nom ? <input type="text" name="nom" id="nom" size="30" value="" /></label>
+<label for="nom">Quel est votre nom : <input type="text" name="nom" id="nom" size="30" value="" /></label>
 <br />
 <a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php bloginfo('url'); ?>">Déjà inscrit ?</a>
 </p>
@@ -167,7 +127,7 @@ foreach($aleatoire as $id)
 	else
 		$rep = '';
 	
-	echo '<input class="reponses reponse-'.$i.'" name="reponse['.$id.']" type="text" size="30" value="'.$rep.'" />';
+	echo '<input autocomplete="off" class="reponses reponse-'.$i.'" name="reponse['.$id.']" type="text" size="30" value="'.$rep.'" />';
 	echo '</label> <span class="verif-'.$i.'"></span>';
 	echo '<br />';
 	echo '<span class="questions question-'.$i.'">'.$questions[$id].'<br /></span>'."\n";
@@ -176,21 +136,29 @@ foreach($aleatoire as $id)
 }
 ?>
 </p>
-<p><input type="submit" name="unlock[<?php echo rand(0,500); ?>]" id="unlock" value="Déverrouillez" /></p>
-</form>
-<h3 id="helplink">Un peu d'aide ?</h3>
-<p id="help">
-<a href="http://www.google.com/search?q=rainbow+table">Lien 1</a><br />
-<a href="http://www.google.com/search?q=javascript">Lien 2</a><br />
-<a href="http://www.google.com/search?q=md5">Lien 3</a>
+<p>
+	<input type="submit" name="unlock[<?php echo rand(0,500); ?>]" id="unlock" value="Déverrouillez" />
+	<span id="unlock-status" style="color:red;"></span>
 </p>
-</div>
+</form>
+<h3 id="helplink" style="cursor:help;">Un peu d'aide ?</h3>
+<ul id="help">
+	<li><a href="http://www.google.com/search?q=rainbow+table">Lien 1</a></li>
+	<li><a href="http://www.google.com/search?q=afficher+le+code+source+firefox">Lien 2</a></li>
+	<li><a href="http://www.google.com/search?q=md5">Lien 3</a></li>
+</ul>
+</div><!-- #content -->
+</div><!-- #container -->
+<?php
+get_sidebar();
+?>
 <script type="text/javascript">
 <!--
 jQuery(document).ready(function($) {
 
 $('.questions').hide();
 $('#help').hide();
+$('#unlock-status').hide();
 
 var reponse = new Array();
 <?php
@@ -202,19 +170,16 @@ foreach($aleatoire as $id)
 }
 ?>
 function validateForm(num) {
-	var val = md5($('.reponse-'+num).val());
-	if(val == reponse[num])
+	var val = $('.reponse-'+num).val();
+
+	if(md5(val) == reponse[num])
 	{
-		$('.verif-'+num).html('Bonne réponse');
-		$('.verif-'+num).removeClass('rouge');
-		$('.verif-'+num).addClass('vert');
+		$('.verif-'+num).html('<span style="color:green;">Bonne réponse</span>');
 		return true;
 	}
 	else
 	{
-		$('.verif-'+num).html('Mauvaise réponse');
-		$('.verif-'+num).removeClass('vert');
-		$('.verif-'+num).addClass('rouge');
+		$('.verif-'+num).html('<span style="color:red;">Mauvaise réponse</span>');
 		return false;
 	}
 }
@@ -232,38 +197,39 @@ $('.reponses').blur(function(){
 });
 
 $('.reponses').keyup(function(){
-	classe = $(this).attr('class');
-	var num = classe.charAt(classe.length-1);
+	var classe = $(this).attr('class').split('-');
+	var num = classe[1];
 	validateForm(num);
 });
 
 $('#formulaire').submit(function(){
-	var validation = 1;
+	var validation = true;
 	
 	if($('#nom').val() == '')
 	{
-		validation = 0;
-	}
-	else
-	{
-		
+		$('#unlock-status').html(' Vous devez entrer un nom !');
+		$('#unlock-status').fadeIn(200).delay(800).fadeOut(200);
+		return false;
 	}
 	
 	$('.reponses').each(function(){
-		classe = $(this).attr('class');
-		var num = classe.charAt(classe.length-1);
+		var classe = $(this).attr('class').split('-');
+		var num = classe[1];
 		if(validateForm(num) == false)
-			validation = 0;
+			validation = false;
 	});
 
-	if(validation == 1)
-		return true;
-	else
-		return false;
+	if(validation == false)
+	{
+		$('#unlock-status').html(' Accès refusé');
+		$('#unlock-status').fadeIn(200).delay(800).fadeOut(200);
+	}
+	
+	return validation;
 });
 
 $('#helplink').click(function(){
-	$('#help').toggle(500);
+	$('#help').slideToggle(500);
 });
 $('#help a').attr('target','_blank');
 
@@ -271,10 +237,8 @@ $('#help a').attr('target','_blank');
 });
 -->
 </script>
-<?php wp_footer(); ?>
-</body>
-</html>
 <?php
-exit;
+get_footer();
+exit; // Ne pas afficher le contenu réel de la page
 }
 ?>
