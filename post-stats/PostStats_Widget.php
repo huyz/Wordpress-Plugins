@@ -2,8 +2,8 @@
 // Sidebar widget
 class PostStats_Widget extends WP_Widget {
 	function PostStats_Widget() {
-            // widget actual processes
-            parent::WP_Widget(false, $name = 'PostStats');
+		$widget_ops = array('classname' => 'widget_poststats', 'description' => __('Posts Statistics',POSTSTATS_TEXTDOMAIN) );
+		$this->WP_Widget(false, 'PostStats',$widget_ops);
 	}
 
 	function form($instance) {
@@ -25,8 +25,11 @@ class PostStats_Widget extends WP_Widget {
             extract( $args );
             $title = apply_filters('widget_title', $instance['title']);
             echo $before_widget;
-            if(isset($title))
-                echo $before_title.$title.$after_title;
+			
+            if(empty($title))
+				$title = __('Posts Statistics',POSTSTATS_TEXTDOMAIN);
+				
+            echo $before_title.$title.$after_title;
             PostStats_widget_function();
             echo $after_widget;
 	}

@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Post Stats v0.1\n"
+"Project-Id-Version: Post Stats v0.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-05-28 13:02+0000\n"
+"PO-Revision-Date: 2010-06-06 10:59+0000\n"
 "Last-Translator: ced <ced@boverie.eu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
 "X-Poedit-Basepath: ../\n"
@@ -19,10 +19,21 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
+#: PostStats_Widget.php:5
+#: PostStats_Widget.php:30
+#: post-stats.php:142
+#@ post-stats
+msgid "Posts Statistics"
+msgstr "De Statistieken van posten"
+
+#: PostStats_Widget.php:12
+msgid "Title:"
+msgstr ""
+
 #: post-stats.php:50
 #@ post-stats
 msgid "Sum:"
-msgstr "Total :"
+msgstr "Som:"
 
 #: post-stats.php:50
 #: post-stats.php:51
@@ -30,134 +41,123 @@ msgstr "Total :"
 #: post-stats.php:53
 #@ post-stats
 msgid "words"
-msgstr "mots"
-
-#: post-stats.php:52
-#@ post-stats
-msgid "Maximum:"
-msgstr "Maximum :"
-
-#: post-stats.php:53
-#@ post-stats
-msgid "Average:"
-msgstr "Moyenne :"
-
-#: post-stats.php:58
-#@ post-stats
-msgid "Longest post:"
-msgstr "Article le plus long :"
-
-#: post-stats.php:60
-#@ post-stats
-msgid "Shortest post:"
-msgstr "Article le plus court :"
-
-#: PostStats_Widget.php:5
-#: PostStats_Widget.php:30
-#: post-stats.php:142
-#@ post-stats
-msgid "Posts Statistics"
-msgstr "Statistiques des articles"
-
-#: PostStats_Widget.php:12
-msgid "Title:"
-msgstr ""
+msgstr "woorden"
 
 #: post-stats.php:51
 #@ post-stats
 msgid "Minimum:"
-msgstr "Minimum : "
+msgstr "Minimum:"
+
+#: post-stats.php:52
+#@ post-stats
+msgid "Maximum:"
+msgstr "Maximum:"
+
+#: post-stats.php:53
+#@ post-stats
+msgid "Average:"
+msgstr "Gemiddelde:"
+
+#: post-stats.php:58
+#@ post-stats
+msgid "Longest post:"
+msgstr "Langste post:"
+
+#: post-stats.php:60
+#@ post-stats
+msgid "Shortest post:"
+msgstr "Kortste post:"
 
 #: post-stats.php:101
 #@ post-stats
 msgid "year"
 msgid_plural "years"
-msgstr[0] "année"
-msgstr[1] "années"
+msgstr[0] "jaar"
+msgstr[1] "jaren"
 
 #: post-stats.php:104
 #@ post-stats
 msgid "month"
 msgid_plural "months"
-msgstr[0] "mois"
-msgstr[1] "mois"
+msgstr[0] "maand"
+msgstr[1] "maanden"
 
 #: post-stats.php:107
 #@ post-stats
 msgid "day"
 msgid_plural "days"
-msgstr[0] "jour"
-msgstr[1] "jours"
+msgstr[0] "dag"
+msgstr[1] "dagen"
 
 #: post-stats.php:110
 #@ post-stats
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] "heure"
-msgstr[1] "heures"
+msgstr[0] "uur"
+msgstr[1] "uren"
 
 #: post-stats.php:113
 #@ post-stats
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] "minute"
-msgstr[1] "minutes"
+msgstr[0] "minuut"
+msgstr[1] "minuten"
 
 #: post-stats.php:116
 #@ post-stats
 msgid "seconde"
 msgid_plural "secondes"
 msgstr[0] "seconde"
-msgstr[1] "secondes"
+msgstr[1] "seconden"
 
 #: post-stats.php:125
 #, php-format
 #@ post-stats
 msgid "This post has %d words."
-msgstr "Cet article a %d mots."
-
-#: post-stats.php:248
-msgid "Save Changes"
-msgstr ""
+msgstr "Deze post heeft %d woorden."
 
 #: post-stats.php:127
 #, php-format
 #@ post-stats
 msgid "It will take approximately %s for reading it."
-msgstr "Il vous faudra environ %s pour le lire."
+msgstr "Het duurt ongeveer %s voor het lezen."
 
 #: post-stats.php:221
 #@ post-stats
 msgid "Very slow reader"
-msgstr "Lecteur très lent"
+msgstr "Zeer langzame lezer"
 
 #: post-stats.php:222
 #@ post-stats
 msgid "Slow reader"
-msgstr "Lecteur lent"
+msgstr "Langzame lezer"
 
 #: post-stats.php:223
 #@ post-stats
 msgid "Average reader"
-msgstr "Lecteur moyen"
+msgstr "Gemiddelde lezer"
 
 #: post-stats.php:224
 #@ post-stats
 msgid "Good reader"
-msgstr "Bon lecteur"
+msgstr "Goede lezer"
 
 #: post-stats.php:225
 #@ post-stats
 msgid "Excellent reader"
-msgstr "Excellent lecteur"
+msgstr "Uitstekende lezer"
 
 #: post-stats.php:240
 #@ post-stats
 msgid "words/minute"
-msgstr "mots/minute"
+msgstr "woorden/minuut"
+
+#: post-stats.php:248
+msgid "Save Changes"
+msgstr ""
 
 #: post-stats.php:67
 #@ post-stats
 msgid "Total reading time:"
-msgstr "Temps de lecture total:"
+msgstr "Totale lezingstijd:"
 

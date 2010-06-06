@@ -25,6 +25,7 @@ define('POSTSTATS_READINGSPEED',200);
 
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
 
+
  // Create the function to output the contents of the widget
 function PostStats_widget_function() {
 	global $wpdb;
@@ -63,7 +64,7 @@ function PostStats_widget_function() {
         //$reading_time = PostStats_format_time(86400*1000+1);
 
         echo '<p>';
-        echo __('Total reading time: ',POSTSTATS_TEXTDOMAIN).$reading_time;
+        echo __('Total reading time:',POSTSTATS_TEXTDOMAIN).' '.$reading_time.'.';
         echo '</p>';
 }
 
@@ -154,6 +155,9 @@ if(get_option('poststats_content') == 'on')
 
 if(is_admin()) // Register admin action
 {
+	// Installation
+	register_activation_hook(__FILE__,'PostStats_init_settings');
+
     // Register dashboard widget
     add_action('wp_dashboard_setup', 'PostStats_add_dashboard_widgets');
     
@@ -164,10 +168,21 @@ if(is_admin()) // Register admin action
     add_action('admin_init', 'PostStats_register_settings');
 }
 
+
+
 function PostStats_register_settings() {
     register_setting('poststats_settings', 'poststats_content');
     register_setting('poststats_settings', 'poststats_dashboard');
     register_setting('poststats_settings', 'poststats_speed');
+}
+
+function PostStats_init_settings() {
+	if(get_option('poststats_content') == '')
+		update_option('poststats_content','off');
+	if(get_option('poststats_dashboard') == '')
+		update_option('poststats_dashboard','on');
+	if(get_option('poststats_speed') == '')
+		update_option('poststats_speed','200');
 }
 
 function PostStats_menu() {
