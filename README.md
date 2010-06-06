@@ -21,7 +21,7 @@ Plugins Developer 0.1
 Aide au développement de plugin pour Wordpress.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/plugins-developer/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/plugins-developer.zip)
 
-Post Stats 0.2
+Post Stats 0.3
 ------------------------
 Statistiques sur la longueur des articles sur le tableau de bord.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/post-stats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/post-stats.zip)

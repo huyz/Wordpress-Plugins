@@ -52,7 +52,7 @@ msgstr "Article le plus long :"
 msgid "Shortest post:"
 msgstr "Article le plus court :"
 
-#: post-stats.php:134
+#: post-stats.php:141
 #@ post-stats
 msgid "Posts Statistics"
 msgstr "Statistiques des articles"
@@ -113,13 +113,49 @@ msgid_plural "secondes"
 msgstr[0] "seconde"
 msgstr[1] "secondes"
 
-#: post-stats.php:123
+#: post-stats.php:124
 #, php-format
+#@ post-stats
 msgid "This post has %d words."
+msgstr "Cet article a %d mots."
+
+#: post-stats.php:233
+msgid "Save Changes"
 msgstr ""
 
-#: post-stats.php:125
+#: post-stats.php:126
 #, php-format
-msgid "That will take approximatively %s for reading it."
-msgstr ""
+#@ post-stats
+msgid "It will take approximately %s for reading it."
+msgstr "Il vous faudra environ %s pour le lire."
+
+#: post-stats.php:206
+#@ post-stats
+msgid "Very slow reader"
+msgstr "Lecteur très lent"
+
+#: post-stats.php:207
+#@ post-stats
+msgid "Slow reader"
+msgstr "Lecteur lent"
+
+#: post-stats.php:208
+#@ post-stats
+msgid "Average reader"
+msgstr "Lecteur moyen"
+
+#: post-stats.php:209
+#@ post-stats
+msgid "Good reader"
+msgstr "Bon lecteur"
+
+#: post-stats.php:210
+#@ post-stats
+msgid "Excellent reader"
+msgstr "Excellent lecteur"
+
+#: post-stats.php:225
+#@ post-stats
+msgid "words/minute"
+msgstr "mots/minute"
 

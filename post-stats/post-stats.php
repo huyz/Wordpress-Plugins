@@ -3,7 +3,7 @@
  * Plugin Name: Post Stats
  * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Statistiques sur la longueur des articles sur le tableau de bord.
- * Version: 0.2
+ * Version: 0.3
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
  */
@@ -19,7 +19,7 @@
  * long with this program; if not, write to the Free Software
  * oundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- 
+ // TODO : Register hook
 define('POSTSTATS_TEXTDOMAIN','post-stats');
 define('POSTSTATS_READINGSPEED',200);
 
@@ -59,7 +59,7 @@ function PostStats_widget_function() {
             echo __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
 	echo '</p>';
 
-        $reading_time = PostStats_format_time($nb_mots_totaux/POSTSTATS_READINGSPEED*60);
+        $reading_time = PostStats_format_time($nb_mots_totaux/get_option('poststats_speed')*60);
         //$reading_time = PostStats_format_time(86400*1000+1);
 
         echo '<p>';
@@ -121,10 +121,10 @@ function PostStats_periodl10n($period,$nb) {
 function PostStats_postContent($content) {
     $nb_words = str_word_count(strip_tags($content));
     $before_content = '<p class="poststats">';
-    $before_content .= sprintf(__('This post has %d words.'),$nb_words);
+    $before_content .= sprintf(__('This post has %d words.',POSTSTATS_TEXTDOMAIN),$nb_words);
     $before_content .= ' ';
-    $before_content .= sprintf(__('It will take approximately %s for reading it.'),
-                                PostStats_format_time($nb_words/POSTSTATS_READINGSPEED*60));
+    $before_content .= sprintf(__('It will take approximately %s for reading it.',POSTSTATS_TEXTDOMAIN),
+                                PostStats_format_time($nb_words/get_option('poststats_speed')*60));
     $before_content .= '</p>';
     return $before_content.$content;
 }
@@ -167,6 +167,7 @@ if(is_admin()) // Register admin action
 function PostStats_register_settings() {
     register_setting('poststats_settings', 'poststats_content');
     register_setting('poststats_settings', 'poststats_dashboard');
+    register_setting('poststats_settings', 'poststats_speed');
 }
 
 function PostStats_menu() {
@@ -199,6 +200,31 @@ function PostStats_options() {
     <label for="poststats_dashboard">Afficher le widget sur le dashboard</label>
     </th><td>
     <input type="checkbox" id="poststats_dashboard" name="poststats_dashboard" '.$value.'" />
+    </td></tr>';
+
+	$speed_tab = array(
+		100 => __('Very slow reader',POSTSTATS_TEXTDOMAIN),
+		150 => __('Slow reader',POSTSTATS_TEXTDOMAIN),
+		200 => __('Average reader',POSTSTATS_TEXTDOMAIN),
+		300 => __('Good reader',POSTSTATS_TEXTDOMAIN),
+		700 => __('Excellent reader',POSTSTATS_TEXTDOMAIN),
+	);
+	
+	$poststats_speed = get_option('poststats_speed');
+	
+    echo '<tr valign="top">
+    <th scope="row">
+    <label for="poststats_speed">Vitesse de lecture</label>
+    </th><td>
+	<select name="poststats_speed">';
+	foreach($speed_tab as $speed => $label)
+	{
+		echo '<option';
+		if($speed == $poststats_speed)
+			echo ' selected="selected"';
+		echo ' value="'.$speed.'">'.$label.' ('.$speed.' '.__('words/minute',POSTSTATS_TEXTDOMAIN).')</option>';
+	}
+	echo '</select>
     </td></tr>';
 
     echo '</table>';
