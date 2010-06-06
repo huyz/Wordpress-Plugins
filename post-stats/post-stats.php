@@ -191,7 +191,7 @@ function PostStats_menu() {
 
 function PostStats_options() {
     echo '<div class="wrap">';
-    echo '<h2>PostStats</h2>';
+    echo '<h2>'.__('Posts Statistics',POSTSTATS_TEXTDOMAIN).'</h2>';
 
     echo '<form method="post" action="options.php">';
     settings_fields('poststats_settings');
