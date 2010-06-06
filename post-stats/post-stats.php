@@ -19,12 +19,11 @@
  * long with this program; if not, write to the Free Software
  * oundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- // TODO : Register hook
+
 define('POSTSTATS_TEXTDOMAIN','post-stats');
 define('POSTSTATS_READINGSPEED',200);
 
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
-
 
  // Create the function to output the contents of the widget
 function PostStats_widget_function() {
@@ -158,31 +157,29 @@ if(is_admin()) // Register admin action
 	// Installation
 	register_activation_hook(__FILE__,'PostStats_init_settings');
 
+    // Register option settings
+    add_action('admin_init', 'PostStats_register_settings');
+
     // Register dashboard widget
     add_action('wp_dashboard_setup', 'PostStats_add_dashboard_widgets');
     
     // Register admin menu
     add_action('admin_menu', 'PostStats_menu');
-
-    // Register option settings
-    add_action('admin_init', 'PostStats_register_settings');
 }
-
-
 
 function PostStats_register_settings() {
     register_setting('poststats_settings', 'poststats_content');
     register_setting('poststats_settings', 'poststats_dashboard');
-    register_setting('poststats_settings', 'poststats_speed');
+    register_setting('poststats_settings', 'poststats_speed', 'intval');
 }
 
 function PostStats_init_settings() {
 	if(get_option('poststats_content') == '')
-		update_option('poststats_content','off');
+		add_option('poststats_content','off');
 	if(get_option('poststats_dashboard') == '')
-		update_option('poststats_dashboard','on');
+		add_option('poststats_dashboard','on');
 	if(get_option('poststats_speed') == '')
-		update_option('poststats_speed','200');
+		add_option('poststats_speed','200');
 }
 
 function PostStats_menu() {
@@ -196,25 +193,19 @@ function PostStats_options() {
     echo '<form method="post" action="options.php">';
     settings_fields('poststats_settings');
     echo '<table class="form-table">';
-
-    if(get_option('poststats_content') == 'on') $value = 'checked="checked"';
-    else $value = '';
-    
+	
     echo '<tr valign="top">
     <th scope="row">
     <label for="poststats_content">Afficher les statistiques au début de chaque article</label>
     </th><td>
-    <input type="checkbox" id="poststats_content" name="poststats_content" '.$value.'" />
+    <input type="checkbox" id="poststats_content" name="poststats_content" '.checked('on',get_option('poststats_content'),false).'" />
     </td></tr>';
-    
-    if(get_option('poststats_dashboard') == 'on') $value = 'checked="checked"';
-    else $value = '';
 
     echo '<tr valign="top">
     <th scope="row">
     <label for="poststats_dashboard">Afficher le widget sur le dashboard</label>
     </th><td>
-    <input type="checkbox" id="poststats_dashboard" name="poststats_dashboard" '.$value.'" />
+    <input type="checkbox" id="poststats_dashboard" name="poststats_dashboard" '.checked('on',get_option('poststats_dashboard'),false).'" />
     </td></tr>';
 
 	$speed_tab = array(
@@ -226,18 +217,14 @@ function PostStats_options() {
 	);
 	
 	$poststats_speed = get_option('poststats_speed');
-	
-    echo '<tr valign="top">
+	    echo '<tr valign="top">
     <th scope="row">
     <label for="poststats_speed">Vitesse de lecture</label>
     </th><td>
 	<select name="poststats_speed">';
 	foreach($speed_tab as $speed => $label)
 	{
-		echo '<option';
-		if($speed == $poststats_speed)
-			echo ' selected="selected"';
-		echo ' value="'.$speed.'">'.$label.' ('.$speed.' '.__('words/minute',POSTSTATS_TEXTDOMAIN).')</option>';
+		echo '<option '.selected($poststats_speed,$speed,false).' value="'.$speed.'">'.$label.' ('.$speed.' '.__('words/minute',POSTSTATS_TEXTDOMAIN).')</option>';
 	}
 	echo '</select>
     </td></tr>';
