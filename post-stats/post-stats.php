@@ -21,7 +21,6 @@
  */
 
 define('POSTSTATS_TEXTDOMAIN','post-stats');
-define('POSTSTATS_READINGSPEED',200);
 
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
 
@@ -69,6 +68,8 @@ function PostStats_widget_function() {
 
 // Transforme un temps en secondes en un temps compréhensible par un humain
 function PostStats_format_time($time) {
+
+	if($time == 0) $time = 1; // Evite le temps de lecture nul
 
    $periods = array(
        'years' => 86400*365,
