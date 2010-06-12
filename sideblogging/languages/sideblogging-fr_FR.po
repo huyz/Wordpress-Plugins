@@ -23,37 +23,37 @@ msgstr ""
 #: sideblogging_Widget.php:49
 #@ sideblogging
 msgid "Asides"
-msgstr "Asides"
+msgstr "Brèves"
 
 #: sideblogging.php:44
 #@ sideblogging
 msgid "Aside"
-msgstr "Aside"
+msgstr "Brève"
 
 #: sideblogging.php:51
 #@ sideblogging
 msgid "Add new aside"
-msgstr "Ajouter un nouvel aside"
+msgstr "Ajouter une nouvelle brève"
 
 #: sideblogging.php:52
 #@ sideblogging
 msgid "Edit aside"
-msgstr "Modifier aside"
+msgstr "Modifier la brève"
 
 #: sideblogging.php:53
 #@ sideblogging
 msgid "No aside found"
-msgstr "Aucun aside trouvé"
+msgstr "Aucune brève trouvée"
 
 #: sideblogging.php:54
 #@ sideblogging
 msgid "No aside found in trash"
-msgstr "Aucun aside trouvé dans la corbeille"
+msgstr "Aucune brève trouvée dans la corbeille"
 
 #: sideblogging.php:55
 #@ sideblogging
 msgid "Search asides"
-msgstr "Chercher dans les asides"
+msgstr "Chercher dans les brèves"
 
 #: sideblogging_Widget.php:22
 msgid "Title:"
@@ -62,10 +62,10 @@ msgstr ""
 #: sideblogging_Widget.php:26
 #@ sideblogging
 msgid "Number of asides to display:"
-msgstr "Nombre d'asides à afficher :"
+msgstr "Nombre de brèves à afficher :"
 
 #: sideblogging_Widget.php:8
 #@ sideblogging
 msgid "Display asides in a widget"
-msgstr "Affiche les asides dans un widget"
+msgstr "Affiche les brèves dans un widget"
 

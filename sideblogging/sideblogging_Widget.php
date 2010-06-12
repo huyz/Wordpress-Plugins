@@ -62,7 +62,12 @@ class SideBlogging_Widget extends WP_Widget {
 				while ( have_posts() )
 				{
 					the_post();
-					echo '<li>'.get_the_title().' <a href="'.get_permalink().'">#</a></li>';
+					echo '<li>'.get_the_title();
+					
+					if(strlen(get_the_content()) > 0)
+						echo ' <a href="'.get_permalink().'">#</a>';
+					
+					echo '</li>';
 				}
 				echo '</ul>';
 			}
