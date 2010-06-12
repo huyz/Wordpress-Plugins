@@ -8,7 +8,7 @@ Affiche l’aperçu d’un article dans une lightbox.
 
 More Embeds 0.1
 ------------------------
-Add provider for “Auto-Embed” feature (currently only Wat.tv).  
+Add provider for « Auto-Embed » feature (currently only Wat.tv).  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/more-embeds/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/more-embeds.zip)
 
 Pending Posts Widget 0.1

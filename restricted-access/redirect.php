@@ -94,7 +94,7 @@ if(!is_home()) // Message d'erreur ailleurs que sur la home
 	get_header();
 	echo '<div id="container"><div id="content">';
 	echo '<p>Désolé, cette page n\'est pas publique.<br />
-			Vous pouvez vous connecter à partir de <a href="">la page d\'accueil</a>.</p>';
+			Vous pouvez vous connecter à partir de <a href="'.get_bloginfo('url').'">la page d\'accueil</a>.</p>';
 	echo '</div></div>';
 	get_footer();
 	exit;
