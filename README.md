@@ -36,3 +36,8 @@ Restrict Access 0.1
 Oblige à résoudre une énigme avant d’autoriser l’accès au blog.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/restricted-access/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/restricted-access.zip)
 
+SideBlogging 0.1
+------------------------
+Affiche des articles courts dans la sidebar du blog.  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/sideblogging/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/sideblogging.zip)
+

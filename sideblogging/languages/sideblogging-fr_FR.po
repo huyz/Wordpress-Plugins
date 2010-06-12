@@ -1,0 +1,71 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SideBlogging v0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-06-12 18:47+0000\n"
+"Last-Translator: ced <ced@boverie.eu>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: sideblogging.php:43
+#: sideblogging_Widget.php:49
+#@ sideblogging
+msgid "Asides"
+msgstr "Asides"
+
+#: sideblogging.php:44
+#@ sideblogging
+msgid "Aside"
+msgstr "Aside"
+
+#: sideblogging.php:51
+#@ sideblogging
+msgid "Add new aside"
+msgstr "Ajouter un nouvel aside"
+
+#: sideblogging.php:52
+#@ sideblogging
+msgid "Edit aside"
+msgstr "Modifier aside"
+
+#: sideblogging.php:53
+#@ sideblogging
+msgid "No aside found"
+msgstr "Aucun aside trouvé"
+
+#: sideblogging.php:54
+#@ sideblogging
+msgid "No aside found in trash"
+msgstr "Aucun aside trouvé dans la corbeille"
+
+#: sideblogging.php:55
+#@ sideblogging
+msgid "Search asides"
+msgstr "Chercher dans les asides"
+
+#: sideblogging_Widget.php:22
+msgid "Title:"
+msgstr ""
+
+#: sideblogging_Widget.php:26
+#@ sideblogging
+msgid "Number of asides to display:"
+msgstr "Nombre d'asides à afficher :"
+
+#: sideblogging_Widget.php:8
+#@ sideblogging
+msgid "Display asides in a widget"
+msgstr "Affiche les asides dans un widget"
+
