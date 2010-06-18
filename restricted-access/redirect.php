@@ -43,14 +43,14 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 				if(restrictAccess::validate($_POST['reponse'],$reponses))
 				{
 					restrictAccess::autoLogin('visiteur');
-					if($_SERVER['HTTP_X_FORWARDED_FOR'])
-                                            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-					elseif($_SERVER['HTTP_CLIENT_IP'])
-                                            $ip = $_SERVER['HTTP_CLIENT_IP'];
+					if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					elseif(isset($_SERVER['HTTP_CLIENT_IP']))
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
 					else
-                                            $ip = $_SERVER['REMOTE_ADDR'];
+						$ip = $_SERVER['REMOTE_ADDR'];
 
-					$infosclient .= '<hr /><p>IP : <a href="http://ipgetinfo.com/index.php?ip='.$ip.'">'.$ip.'</a><br />';
+					$infosclient = '<hr /><p>IP : <a href="http://ipgetinfo.com/index.php?ip='.$ip.'">'.$ip.'</a><br />';
 					
 					if(!empty($_SERVER['GEOIP_COUNTRY_NAME']))
 						$infosclient .= 'Localisation : '.utf8_encode($_SERVER['GEOIP_CITY']).', '.$_SERVER['GEOIP_COUNTRY_NAME'].' (<a href="http://maps.google.com/maps?q='.$_SERVER['GEOIP_LATITUDE'].','.$_SERVER['GEOIP_LONGITUDE'].'">carte</a>)<br />';
