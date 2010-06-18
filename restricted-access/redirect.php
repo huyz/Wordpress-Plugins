@@ -28,14 +28,6 @@ if(count($questions) != count($reponses))
 else
 	$count = count($questions);
 
-function restrictAccess_validate($entrees,$reponses) {
-	foreach($entrees as $id => $rep)
-	{
-		if($rep != $reponses[$id])
-			return false;
-	}
-	return true;
-}
 
 if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 {
@@ -48,9 +40,9 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 			$nom = strip_tags(stripslashes($_POST['nom']));
 			if(!empty($nom))
 			{
-				if(restrictAccess_validate($_POST['reponse'],$reponses))
+				if(restrictAccess::validate($_POST['reponse'],$reponses))
 				{
-					restrictAccess_autoLogin();
+					restrictAccess::autoLogin('visiteur');
 					if($_SERVER['HTTP_X_FORWARDED_FOR'])
                                             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 					elseif($_SERVER['HTTP_CLIENT_IP'])

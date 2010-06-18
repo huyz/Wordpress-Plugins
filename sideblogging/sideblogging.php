@@ -8,16 +8,16 @@
  * Author URI: http://www.boverie.eu/
 */
 /* Copyright 2010  Cédric Boverie  (email : ced@boverie.eu)
- * his program is free software; you can redistribute it and/or modify
- * t under the terms of the GNU General Public License, version 2, as
- * ublished by the Free Software Foundation.
- * his program is distributed in the hope that it will be useful,
- * ut WITHOUT ANY WARRANTY; without even the implied warranty of
- * ERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * NU General Public License for more details.
- * ou should have received a copy of the GNU General Public License
- * long with this program; if not, write to the Free Software
- * oundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * this program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as
+ * published by the Free Software Foundation.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * Along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 if(!class_exists('Sideblogging')):

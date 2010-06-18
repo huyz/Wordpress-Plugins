@@ -19,28 +19,75 @@
  * Along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
- 
-function restrictAccess_autoLogin($user_login = 'visiteur') {
-	$user = get_userdatabylogin($user_login);
-	$user_id = $user->ID;
-	wp_set_current_user($user_id, $user_login);
-	wp_set_auth_cookie($user_id);
-	do_action('wp_login', $user_login);
+register_activation_hook( __FILE__, array('restrictAccess','activation'));
+
+if(!class_exists('restrictAccess')):
+class restrictAccess {
+	/* Constructeur PHP4 */
+	function restrictAccess() {
+		return __construct();
+	}
+	
+	/* Constructeur */
+	public function __construct() {
+		if(!is_admin())
+		{
+			// Restreindre l'accès au blog
+			add_action('template_redirect', array(&$this,'init'),false,'ced');
+			// Flux sans contenu
+			add_filter('the_excerpt_rss', '__return_false');
+			add_filter('the_content_feed', '__return_false');
+		}
+	}
+	
+	/* Connexion automatique sur le compte d'un utilisateur */
+	static function autoLogin($user_login = 'visiteur')
+	{
+		$user = get_userdatabylogin($user_login);
+		$user_id = $user->ID;
+		wp_set_current_user($user_id, $user_login);
+		wp_set_auth_cookie($user_id);
+		do_action('wp_login', $user_login);
+	}
+
+	/* Ajout de la page de l'énigme, sauf sur le flux rss */
+	public function init() {
+		if(!isset($_GET['skip']) && !is_feed())
+			require(dirname(__FILE__).'/redirect.php');
+	}
+
+	static function activation() {
+		restrictAccess::createUserIfNotExist();
+	}
+	
+	static function createUserIfNotExist() {
+		require_once(ABSPATH . WPINC . '/registration.php');
+		$user_name = 'visiteur';
+		$user_id = username_exists($user_name);
+		if ( !$user_id )
+		{
+			$random_password = wp_generate_password(12, true);
+			$user_id = wp_create_user($user_name, $random_password, $user_name.'@'.$_SERVER['SERVER_NAME'].'.fake');
+		}
+		
+		if(ctype_digit($user_id))
+		{
+			$user = new WP_User( $user_id );
+			$user->set_role( 'subscriber' );
+		}
+	}
+
+	static function validate($entrees,$reponses) {
+		foreach($entrees as $id => $rep)
+		{
+			if($rep != $reponses[$id])
+				return false;
+		}
+		return true;
+	}
+
 }
+endif;
 
-
-/* Ajout de la page de l'énigme, sauf sur le flux rss */
-function restrictAccess_init() {
-	if(!isset($_GET['skip']) && !is_feed())
-		require(dirname(__FILE__).'/redirect.php');
-}
-add_action('template_redirect', 'restrictAccess_init');
-
-
-// Flux sans contenu
-function restrictAccess_postrss($content) {
-	return '';
-}
-add_filter('the_excerpt_rss', 'restrictAccess_postrss');
-add_filter('the_content_feed', 'restrictAccess_postrss');
-
+if(!isset($restrictAccess))
+	$restrictAccess = new restrictAccess();
