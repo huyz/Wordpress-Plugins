@@ -75,8 +75,7 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 	}
 }
 
-if(!is_user_logged_in())
-{
+if(!is_user_logged_in()): // Si le visiteur n'est pas connecté
 $aleatoire = range(0,$count-1);
 shuffle($aleatoire);
 header('HTTP/1.1 401 Unauthorized');
@@ -141,9 +140,7 @@ foreach($aleatoire as $id)
 </ul>
 </div><!-- #content -->
 </div><!-- #container -->
-<?php
-get_sidebar();
-?>
+
 <script type="text/javascript">
 <!--
 jQuery(document).ready(function($) {
@@ -232,5 +229,5 @@ $('#help a').attr('target','_blank');
 <?php
 get_footer();
 exit; // Ne pas afficher le contenu réel de la page
-}
+endif; // Fin de si le visiteur n'est pas connecté
 ?>

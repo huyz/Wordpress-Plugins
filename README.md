@@ -11,6 +11,11 @@ More Embeds 0.1
 Add provider for « Auto-Embed » feature (currently only Wat.tv).  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/more-embeds/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/more-embeds.zip)
 
+Multisite Switcher 0.1
+------------------------
+Fast switch between sites administration installed on the same « network ».  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/multisite-switcher/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/multisite-switcher.zip)
+
 Pending Posts Widget 0.1
 ------------------------
 Un widget qui affiche la liste des articles en attente.  
@@ -31,7 +36,7 @@ Proximus Moblog Sync 0.3
 Republie les articles d’un moblog Proximus dans un blog Wordpress.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/proximus-moblog/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/proximus-moblog.zip)
 
-Restrict Access 0.1
+Restrict Access 0.2
 ------------------------
 Oblige à résoudre une énigme avant d’autoriser l’accès au blog.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/restricted-access/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/restricted-access.zip)

@@ -3,10 +3,10 @@
  * Plugin Name: Restrict Access
  * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Oblige à résoudre une énigme avant d'autoriser l'accès au blog.
- * Version: 0.1
+ * Version: 0.2
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
- */
+*/
 /* Copyright 2010  Cédric Boverie  (email : ced@boverie.eu)
  * this program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * Along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
+*/
 register_activation_hook( __FILE__, array('restrictAccess','activation'));
 
 if(!class_exists('restrictAccess')):
@@ -41,8 +41,7 @@ class restrictAccess {
 	}
 	
 	/* Connexion automatique sur le compte d'un utilisateur */
-	static function autoLogin($user_login = 'visiteur')
-	{
+	static function autoLogin($user_login = 'visiteur')	{
 		$user = get_userdatabylogin($user_login);
 		$user_id = $user->ID;
 		wp_set_current_user($user_id, $user_login);
