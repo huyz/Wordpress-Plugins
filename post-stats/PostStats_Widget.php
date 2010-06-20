@@ -30,7 +30,7 @@ class PostStats_Widget extends WP_Widget {
 				$title = __('Posts Statistics',POSTSTATS_TEXTDOMAIN);
 				
             echo $before_title.$title.$after_title;
-            PostStats_widget_function();
+            PostStats::diplay_stats();
             echo $after_widget;
 	}
 }

@@ -26,9 +26,9 @@ Plugins Developer 0.1
 Aide au développement de plugin pour Wordpress.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/plugins-developer/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/plugins-developer.zip)
 
-Post Stats 0.3
+Post Stats 1.0
 ------------------------
-Statistiques sur la longueur des articles sur le tableau de bord.  
+Statistics about posts’ length and reading time on dashboard.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/post-stats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/post-stats.zip)
 
 Proximus Moblog Sync 0.3
