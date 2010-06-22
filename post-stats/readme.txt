@@ -2,11 +2,12 @@
 Contributors: cedbv
 Donate link: http://www.boverie.eu/
 Tags: reading time,stats,word count
-Requires at least: 3.0
+Requires at least: 2.9
 Tested up to: 3.0
 Stable tag: 1.0
 
-Statistics about posts length and reading time on dashboard.
+Statistics about posts length and reading time on dashboard and/or sidebar widget.
+Optionally, display estimated reading time before each post.
 
 == Description ==
 
@@ -31,7 +32,9 @@ Optionally, displays additional statistics before each post.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= What are the requirements ? =
+* At least Wordpress 2.9.2
+* PHP 5
 
 An answer to that question.
 
@@ -47,6 +50,7 @@ An answer to that question.
 * First public version.
 
 = 0.4 =
+* Add settings link
 * Queries optimization.
 * Bug fix.
 

@@ -28,31 +28,57 @@ class multiSiteSwitcher {
 	}
 	
 	function __construct() {
-		add_action('in_admin_header', array(&$this, 'add_menu'));
+		
+		// Noscript switcher
+		if(isset($_POST['multisiteswitcher']))
+				add_action('admin_menu',array(&$this,'redirect_to_selected_admin'));
+
+		add_action('in_admin_header', array(&$this, 'add_switcher'));
 	}
 
-	function add_menu() {
+	function add_switcher() {
 	
+		// Tester si le multisite est activié
 		if(!function_exists('is_multisite') || !is_multisite())
 			return false;
 
+		// Blogs de l'utilisateur actuel
 		global $current_user;
 		$blogs = get_blogs_of_user( $current_user->id );
 
+		// Il faut plus d'un blog pour avoir le menu déroulant
 		if(count($blogs) <= 1)
 			return false;
 
 		$current_blogurl = get_bloginfo('url');
-		
-		echo '<select onchange="location.href=this.value;" style="float:left;min-width:150px;margin:10px 0 0 30px;" id="multisiteswitcher" name="multisiteswitcher">';
+		echo '<form style="float:left;min-width:150px;margin:10px 0 0 40px;" action="" method="post">';
+		wp_nonce_field('multisite-switcher');
+		echo '<select onchange="location.href=this.value;" id="multisiteswitcher" name="multisiteswitcher">';
 		foreach($blogs as $blog)
 		{
-			echo '<option '.selected($blog->siteurl,$current_blogurl).' value="'.$blog->siteurl.'/wp-admin/">'.$blog->blogname.'</option>';
+			echo '<option '.selected($blog->siteurl,$current_blogurl,false).' value="'.$blog->siteurl.'/wp-admin/">'.$blog->blogname.'</option>';
 		}
-		echo '</select>';		
+		echo '</select>';
+		echo '<noscript> <input class="button-secondary action" type="submit" value="Go"/></noscript>';
+		echo '</form>';
+	}
+	
+	function redirect_to_selected_admin() {
+		check_admin_referer('multisite-switcher');
+		// Comme sécurité basique, on vérifie que le blog sélectioné existe et gérer par l'utilisteur courant
+		global $current_user;
+		$blogs = get_blogs_of_user( $current_user->id );
+		foreach($blogs as $blog)
+		{
+			if($blog->siteurl.'/wp-admin/' == $_POST['multisiteswitcher'])
+			{
+				wp_redirect($_POST['multisiteswitcher'],302);
+				exit;
+			}	
+		}
 	}
 }
 endif;
 
-if(!isset($multiSiteSwitcher))
+if(is_admin() && !isset($multiSiteSwitcher))
 	$multiSiteSwitcher = new multiSiteSwitcher();

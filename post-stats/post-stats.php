@@ -1,8 +1,8 @@
 <?php
 /*
  * Plugin Name: Post Stats
- * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
- * Description: Statistics about posts' length and reading time on dashboard.
+ * Plugin URI: http://blog.boverie.eu/poststats-statistiques-des-articles/
+ * Description: Statistics about posts length and reading time on dashboard and more.
  * Version: 1.0
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
@@ -24,6 +24,8 @@ define('POSTSTATS_TEXTDOMAIN','post-stats');
 load_plugin_textdomain(POSTSTATS_TEXTDOMAIN,false,dirname(plugin_basename(__FILE__)).'/languages/'); 
 // Installation
 register_activation_hook(__FILE__,'PostStats::init_settings');
+// Désinstallation
+register_deactivation_hook(__FILE__,'PostStats::delete_settings');
 
 if(!class_exists('PostStats')):
 class PostStats {
@@ -36,38 +38,43 @@ class PostStats {
 	// Constructor
 	function __construct() {
 	
+		$options = get_option('poststats');
+	
 		if(is_admin()) // Register admin action
 		{
-
 			// Register option settings
 			add_action('admin_init', array(&$this,'register_settings'));
-
-			// Register dashboard widget
-			add_action('wp_dashboard_setup', array(&$this,'add_dashboard_widget'));
-			
 			// Register admin menu
 			add_action('admin_menu', array(&$this,'menu'));
+			// Add Settings link on plugin page
+			add_filter('plugin_action_links_'.plugin_basename(__FILE__), array(&$this,'settings_link'));
+			
+			// Register dashboard widget
+			if('on' == $options['dashboard'])
+			{
+				add_action('wp_dashboard_setup', array(&$this,'add_dashboard_widget'));
+			}
 		}
-		else if(get_option('poststats_content') == 'on') // Not in administration && add stats before content on
+		else if('on' == $options['content']) // Not in administration and post stats on
 		{
 			// Ajoute le nombre de mots + estimation du temps de lecture avant le post
 			add_filter('the_content', array(&$this,'postContent'));
 			add_filter('the_excerpt',array(&$this,'excerptFix'),0);
 		}
-		
+
 		/* Sidebar Widget */
 		require_once(dirname(__FILE__).'/PostStats_Widget.php');
 		add_action('widgets_init', create_function('', 'return register_widget("PostStats_Widget");'));
 	}
 
-
 	// Create the function to output the contents of the widget
-	static function diplay_stats() {
+	function diplay_stats() {
 		global $wpdb;
+		$options = get_option('poststats');
 		$nb_mots_totaux = $wpdb->get_var("SELECT SUM(LENGTH(post_content) - LENGTH(REPLACE(post_content,' ',''))+1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post'");
 		$nb_mots_avg = $wpdb->get_var("SELECT AVG(LENGTH(post_content) - LENGTH(REPLACE(post_content,' ',''))+1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post'");
 		
-			$longest = $wpdb->get_row("
+		$longest = $wpdb->get_row("
 		SELECT ID,post_title,LENGTH(post_content) - LENGTH(REPLACE(post_content,' ',''))+1 AS NB_MOTS 
 		FROM $wpdb->posts 
 		WHERE post_status = 'publish' AND post_type = 'post' 
@@ -95,7 +102,7 @@ class PostStats {
 				echo __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
 		echo '</p>';
 
-			$reading_time = PostStats::format_time($nb_mots_totaux/get_option('poststats_speed')*60);
+			$reading_time = PostStats::format_time($nb_mots_totaux/$options['speed']*60);
 
 			echo '<p>';
 			echo __('Total reading time:',POSTSTATS_TEXTDOMAIN).' '.$reading_time.'.';
@@ -156,12 +163,13 @@ class PostStats {
 
 	// Ajoute les statistiques au début de chaque post
 	function postContent($content) {
+		$options = get_option('poststats');
 		$nb_words = str_word_count(strip_tags($content));
 		$before_content = '<p class="poststats">';
 		$before_content .= sprintf(__('This post has %d words.',POSTSTATS_TEXTDOMAIN),$nb_words);
 		$before_content .= ' ';
 		$before_content .= sprintf(__('It will take approximately %s for reading it.',POSTSTATS_TEXTDOMAIN),
-									$this->format_time($nb_words/get_option('poststats_speed')*60));
+									$this->format_time($nb_words/$options['speed']*60));
 		$before_content .= '</p>';
 		return $before_content.$content;
 	}
@@ -171,52 +179,70 @@ class PostStats {
 		return substr($content,strpos($content,'.',strpos($content,'.')+1)+1);
 	}
 
+	// Setting link on plugin page
+	function settings_link($links) {
+		$settings_link = '<a href="options-general.php?page=poststats">'.__('Settings').'</a>';
+		array_push($links,$settings_link);
+		return $links;
+	}
+	
 	/* Dashboard Widget */
-	// Create the function use in the action hook
 	function add_dashboard_widget() {
-		if(get_option('poststats_dashboard') == 'on')
 			wp_add_dashboard_widget('example_dashboard_widget', __('Posts Statistics',POSTSTATS_TEXTDOMAIN), array(&$this,'diplay_stats'));
 	}
 	
+	// Register settings
 	function register_settings() {
-		register_setting('poststats_settings', 'poststats_content');
-		register_setting('poststats_settings', 'poststats_dashboard');
-		register_setting('poststats_settings', 'poststats_speed', 'intval');
+		register_setting('poststats_settings','poststats',array(&$this,'filter_options'));
+	}
+	
+	function filter_options($options) {
+		$options['content'] = ($options['content'] == 'on') ? 'on' : 'off';
+		$options['dashboard'] = ($options['dashboard'] == 'on') ? 'on' : 'off';
+		$options['speed'] = intval($options['speed']);
+		return $options;
+	}
+	
+	// Initialisation des paramètres
+	function init_settings() {
+		$options = array();
+		$options['content'] = 'off';
+		$options['dashboard'] = 'on';
+		$options['speed'] = '200';
+		update_option('poststats',$options);
 	}
 
-	static function init_settings() {
-		if(get_option('poststats_content') == '')
-			add_option('poststats_content','off');
-		if(get_option('poststats_dashboard') == '')
-			add_option('poststats_dashboard','on');
-		if(get_option('poststats_speed') == '')
-			add_option('poststats_speed','200');
+	// Remove plugin settings
+	function delete_settings() {
+		delete_option('poststats');
 	}
 
 	function menu() {
-	  add_options_page('PostStats', 'PostStats', 'manage_options', 'poststats', array('PostStats','options'));
+	  add_options_page('PostStats', 'PostStats', 'manage_options', 'poststats', array('PostStats','options_page'));
 	}
 
-	function options() {
+	/* Options page */
+	function options_page() {
 		echo '<div class="wrap">';
 		echo '<h2>'.__('Posts Statistics',POSTSTATS_TEXTDOMAIN).'</h2>';
 
 		echo '<form method="post" action="options.php">';
 		settings_fields('poststats_settings');
+		$options = get_option('poststats');
 		echo '<table class="form-table">';
 		
 		echo '<tr valign="top">
 		<th scope="row">
 		<label for="poststats_content">Afficher les statistiques au début de chaque article</label>
 		</th><td>
-		<input type="checkbox" id="poststats_content" name="poststats_content" '.checked('on',get_option('poststats_content'),false).'" />
+		<input type="checkbox" id="poststats_content" name="poststats[content]" '.checked('on',$options['content'],false).'" />
 		</td></tr>';
 
 		echo '<tr valign="top">
 		<th scope="row">
 		<label for="poststats_dashboard">Afficher le widget sur le dashboard</label>
 		</th><td>
-		<input type="checkbox" id="poststats_dashboard" name="poststats_dashboard" '.checked('on',get_option('poststats_dashboard'),false).'" />
+		<input type="checkbox" id="poststats_dashboard" name="poststats[dashboard]" '.checked('on',$options['dashboard'],false).'" />
 		</td></tr>';
 
 		$speed_tab = array(
@@ -227,15 +253,14 @@ class PostStats {
 			700 => __('Excellent reader',POSTSTATS_TEXTDOMAIN),
 		);
 		
-		$poststats_speed = get_option('poststats_speed');
 			echo '<tr valign="top">
 		<th scope="row">
 		<label for="poststats_speed">Vitesse de lecture</label>
 		</th><td>
-		<select name="poststats_speed">';
+		<select name="poststats[speed]">';
 		foreach($speed_tab as $speed => $label)
 		{
-			echo '<option '.selected($poststats_speed,$speed,false).' value="'.$speed.'">'.$label.' ('.$speed.' '.__('words/minute',POSTSTATS_TEXTDOMAIN).')</option>';
+			echo '<option '.selected($options['speed'],$speed,false).' value="'.$speed.'">'.$label.' ('.$speed.' '.__('words/minute',POSTSTATS_TEXTDOMAIN).')</option>';
 		}
 		echo '</select>
 		</td></tr>';
@@ -253,5 +278,5 @@ class PostStats {
 endif;
 
 if(!isset($poststats))
-	$poststats = new PostStats();
+$poststats = new PostStats();
 ?>

@@ -30,19 +30,20 @@ function plugins_dev_adminMenu() {
 
 function plugins_dev_mainPage() {
 
-    define(GITHUB_URL,"http://github.com/cedbv/Wordpress-Plugins/");
+    define('GITHUB_URL',"http://github.com/cedbv/Wordpress-Plugins/");
 
-    if(isset($_POST['updateReadme']))
-    {
-        pluginsDev::updateReadme();
-        echo '<div id="message" class="updated fade"><p><strong>Fichier README.md mis à jour.</strong></p></div>';
-    }
-    else if(isset($_POST['generateArchive']))
-    {
-        pluginsDev::generateArchive();
-        echo '<div id="message" class="updated fade"><p><strong>Archives générées.</strong></p></div>';
-    }
-
+	if(isset($_POST['updateReadme']))
+	{
+		check_admin_referer('plugins-developer');
+		pluginsDev::updateReadme();
+		echo '<div id="message" class="updated fade"><p><strong>Fichier README.md mis à jour.</strong></p></div>';
+	}
+	else if(isset($_POST['generateArchive']))
+	{
+		check_admin_referer('plugins-developer');
+		pluginsDev::generateArchive();
+		echo '<div id="message" class="updated fade"><p><strong>Archives générées.</strong></p></div>';
+	}
     echo '<div class="wrap">';
     echo '<div id="icon-plugins" class="icon32"></div><h2>Plugin Developer</h2>';
 
@@ -71,11 +72,11 @@ function plugins_dev_mainPage() {
     
     echo '<h3>Actions sur les plugins</h3>';
     echo '<form action="" method="post">';
+	wp_nonce_field('plugins-developer');
     echo '<input type="submit" name="updateReadme" class="button-secondary" value="Mise à jour du Readme" />';
     echo '<br />';
     echo '<input type="submit" name="generateArchive" class="button-secondary" value="Générer toutes les archives" />';
     echo '</form>';
-
 
     echo '</div>';
 }

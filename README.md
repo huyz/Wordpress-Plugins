@@ -11,6 +11,11 @@ More Embeds 0.1
 Add provider for « Auto-Embed » feature (currently only Wat.tv).  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/more-embeds/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/more-embeds.zip)
 
+Multisite Restore Features 0.1
+------------------------
+Activate post by mail and custom ping sites in a multisite configuration.  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/multisite-restore-features/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/multisite-restore-features.zip)
+
 Multisite Switcher 0.1
 ------------------------
 Fast switch between sites administration installed on the same « network ».  
@@ -28,7 +33,7 @@ Aide au développement de plugin pour Wordpress.
 
 Post Stats 1.0
 ------------------------
-Statistics about posts’ length and reading time on dashboard.  
+Statistics about posts length and reading time on dashboard and more.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/post-stats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/post-stats.zip)
 
 Proximus Moblog Sync 0.3
