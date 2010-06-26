@@ -19,42 +19,43 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: post-stats.php:50
+#: poststats.php:92
 #@ post-stats
 msgid "Sum:"
 msgstr "Total :"
 
-#: post-stats.php:50
-#: post-stats.php:51
-#: post-stats.php:52
-#: post-stats.php:53
+#: poststats.php:92
+#: poststats.php:93
+#: poststats.php:94
+#: poststats.php:95
 #@ post-stats
 msgid "words"
 msgstr "mots"
 
-#: post-stats.php:52
+#: poststats.php:94
 #@ post-stats
 msgid "Maximum:"
 msgstr "Maximum :"
 
-#: post-stats.php:53
+#: poststats.php:95
 #@ post-stats
 msgid "Average:"
 msgstr "Moyenne :"
 
-#: post-stats.php:58
+#: poststats.php:100
 #@ post-stats
 msgid "Longest post:"
 msgstr "Article le plus long :"
 
-#: post-stats.php:60
+#: poststats.php:102
 #@ post-stats
 msgid "Shortest post:"
 msgstr "Article le plus court :"
 
 #: PostStats_Widget.php:5
 #: PostStats_Widget.php:30
-#: post-stats.php:142
+#: poststats.php:191
+#: poststats.php:227
 #@ post-stats
 msgid "Posts Statistics"
 msgstr "Statistiques des articles"
@@ -63,101 +64,105 @@ msgstr "Statistiques des articles"
 msgid "Title:"
 msgstr ""
 
-#: post-stats.php:51
+#: poststats.php:93
 #@ post-stats
 msgid "Minimum:"
 msgstr "Minimum : "
 
-#: post-stats.php:101
+#: poststats.php:144
 #@ post-stats
 msgid "year"
 msgid_plural "years"
 msgstr[0] "année"
 msgstr[1] "années"
 
-#: post-stats.php:104
+#: poststats.php:147
 #@ post-stats
 msgid "month"
 msgid_plural "months"
 msgstr[0] "mois"
 msgstr[1] "mois"
 
-#: post-stats.php:107
+#: poststats.php:150
 #@ post-stats
 msgid "day"
 msgid_plural "days"
 msgstr[0] "jour"
 msgstr[1] "jours"
 
-#: post-stats.php:110
+#: poststats.php:153
 #@ post-stats
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "heure"
 msgstr[1] "heures"
 
-#: post-stats.php:113
+#: poststats.php:156
 #@ post-stats
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minute"
 msgstr[1] "minutes"
 
-#: post-stats.php:116
+#: poststats.php:159
 #@ post-stats
 msgid "seconde"
 msgid_plural "secondes"
 msgstr[0] "seconde"
 msgstr[1] "secondes"
 
-#: post-stats.php:125
+#: poststats.php:169
 #, php-format
 #@ post-stats
 msgid "This post has %d words."
 msgstr "Cet article a %d mots."
 
-#: post-stats.php:248
+#: poststats.php:271
 msgid "Save Changes"
 msgstr ""
 
-#: post-stats.php:127
+#: poststats.php:171
 #, php-format
 #@ post-stats
 msgid "It will take approximately %s for reading it."
 msgstr "Il vous faudra environ %s pour le lire."
 
-#: post-stats.php:221
+#: poststats.php:249
 #@ post-stats
 msgid "Very slow reader"
 msgstr "Lecteur très lent"
 
-#: post-stats.php:222
+#: poststats.php:250
 #@ post-stats
 msgid "Slow reader"
 msgstr "Lecteur lent"
 
-#: post-stats.php:223
+#: poststats.php:251
 #@ post-stats
 msgid "Average reader"
 msgstr "Lecteur moyen"
 
-#: post-stats.php:224
+#: poststats.php:252
 #@ post-stats
 msgid "Good reader"
 msgstr "Bon lecteur"
 
-#: post-stats.php:225
+#: poststats.php:253
 #@ post-stats
 msgid "Excellent reader"
 msgstr "Excellent lecteur"
 
-#: post-stats.php:240
+#: poststats.php:263
 #@ post-stats
 msgid "words/minute"
 msgstr "mots/minute"
 
-#: post-stats.php:67
+#: poststats.php:108
 #@ post-stats
 msgid "Total reading time:"
 msgstr "Temps de lecture total:"
+
+#: poststats.php:184
+msgid "Settings"
+msgstr ""
 

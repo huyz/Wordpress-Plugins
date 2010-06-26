@@ -1,4 +1,5 @@
 <?php
+/*
 $questions = array(
 	'Je suis ... (mot de 3 lettres)',
 	'Que reste-t-il lors de l\'apparition du néant ?',
@@ -22,9 +23,12 @@ $reponses = array(
 	'password',
 	'111',
 );
+*/
+$questions = $options['questions'];
+$reponses = $options['reponses'];
 
 if(count($questions) != count($reponses))
-	die('Erreur dans la préparation des questions');
+	wp_die('Redirect Access : Erreur dans la préparation des questions.');
 else
 	$count = count($questions);
 
@@ -32,7 +36,7 @@ else
 if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 {
 	if($count != count($_POST['reponse']))
-		die('tentative de triche détectée...');
+		wp_die('Tricher, c\'est mal...');
 	else
 	{
 		if(isset($_POST['nom']))
@@ -42,7 +46,7 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 			{
 				if(restrictAccess::validate($_POST['reponse'],$reponses))
 				{
-					restrictAccess::autoLogin('visiteur');
+					restrictAccess::autoLogin();
 					if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
 						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 					elseif(isset($_SERVER['HTTP_CLIENT_IP']))
@@ -111,12 +115,9 @@ get_header();
 $i = 1;
 foreach($aleatoire as $id)
 {
-	echo '<label>Clé '.$i.' : ';
+	echo '<label style="">Clé '.$i.' : ';
 	
-	if(isset($_POST['reponse'][$id]))
-		$rep = $_POST['reponse'][$id];
-	else
-		$rep = '';
+	$rep = (isset($_POST['reponse'][$id])) ? $_POST['reponse'][$id] : '';
 	
 	echo '<input autocomplete="off" class="reponses reponse-'.$i.'" name="reponse['.$id.']" type="text" size="30" value="'.$rep.'" />';
 	echo '</label> <span class="verif-'.$i.'"></span>';
@@ -132,15 +133,8 @@ foreach($aleatoire as $id)
 	<span id="unlock-status" style="color:red;"></span>
 </p>
 </form>
-<h3 id="helplink" style="cursor:help;">Un peu d'aide ?</h3>
-<ul id="help">
-	<li><a href="http://www.google.com/search?q=rainbow+table">Lien 1</a></li>
-	<li><a href="http://www.google.com/search?q=afficher+le+code+source+firefox">Lien 2</a></li>
-	<li><a href="http://www.google.com/search?q=md5">Lien 3</a></li>
-</ul>
 </div><!-- #content -->
 </div><!-- #container -->
-
 <script type="text/javascript">
 <!--
 jQuery(document).ready(function($) {
@@ -175,10 +169,9 @@ function validateForm(num) {
 
 $('.reponses').focus(function(){
 	$('.questions').fadeOut(250);
-	
 	classe = $(this).attr('class');
-	var num = classe.charAt(classe.length-1);
-		
+	var num = classe.split('-');
+	num = num[1];
 	$('.question-'+num).fadeIn(250);
 });
 $('.reponses').blur(function(){
@@ -216,12 +209,6 @@ $('#formulaire').submit(function(){
 	
 	return validation;
 });
-
-$('#helplink').click(function(){
-	$('#help').slideToggle(500);
-});
-$('#help a').attr('target','_blank');
-
 
 });
 -->

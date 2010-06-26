@@ -34,7 +34,7 @@ Aide au développement de plugin pour Wordpress.
 Post Stats 1.0
 ------------------------
 Statistics about posts length and reading time on dashboard and more.  
-[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/post-stats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/post-stats.zip)
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/poststats/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/poststats.zip)
 
 Proximus Moblog Sync 0.3
 ------------------------
@@ -46,7 +46,7 @@ Restrict Access 0.2
 Oblige à résoudre une énigme avant d’autoriser l’accès au blog.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/restricted-access/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/restricted-access.zip)
 
-SideBlogging 0.1
+SideBlogging 0.5
 ------------------------
 Affiche des articles courts dans la sidebar du blog.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/sideblogging/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/sideblogging.zip)

@@ -65,14 +65,14 @@ class multiSiteSwitcher {
 	
 	function redirect_to_selected_admin() {
 		check_admin_referer('multisite-switcher');
-		// Comme sécurité basique, on vérifie que le blog sélectioné existe et gérer par l'utilisteur courant
+		// Comme sécurité basique, on vérifie que le blog sélectioné existe et est géré par l'utilisteur courant
 		global $current_user;
 		$blogs = get_blogs_of_user( $current_user->id );
 		foreach($blogs as $blog)
 		{
 			if($blog->siteurl.'/wp-admin/' == $_POST['multisiteswitcher'])
 			{
-				wp_redirect($_POST['multisiteswitcher'],302);
+				wp_redirect($_POST['multisiteswitcher']);
 				exit;
 			}	
 		}

@@ -3,6 +3,7 @@ index.php
 hello.php
 akismet
 codestyling-localization
+capsman
 debug-objects
 debug-queries
 embedly
@@ -12,5 +13,6 @@ simple-facebook-connect
 w3-total-cache
 wp-pagenavi
 wordpress-console
+cron-view
 draft
 pages

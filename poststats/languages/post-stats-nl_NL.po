@@ -21,7 +21,8 @@ msgstr ""
 
 #: PostStats_Widget.php:5
 #: PostStats_Widget.php:30
-#: post-stats.php:142
+#: poststats.php:191
+#: poststats.php:227
 #@ post-stats
 msgid "Posts Statistics"
 msgstr "De Statistieken van posten"
@@ -30,134 +31,138 @@ msgstr "De Statistieken van posten"
 msgid "Title:"
 msgstr ""
 
-#: post-stats.php:50
+#: poststats.php:92
 #@ post-stats
 msgid "Sum:"
 msgstr "Som:"
 
-#: post-stats.php:50
-#: post-stats.php:51
-#: post-stats.php:52
-#: post-stats.php:53
+#: poststats.php:92
+#: poststats.php:93
+#: poststats.php:94
+#: poststats.php:95
 #@ post-stats
 msgid "words"
 msgstr "woorden"
 
-#: post-stats.php:51
+#: poststats.php:93
 #@ post-stats
 msgid "Minimum:"
 msgstr "Minimum:"
 
-#: post-stats.php:52
+#: poststats.php:94
 #@ post-stats
 msgid "Maximum:"
 msgstr "Maximum:"
 
-#: post-stats.php:53
+#: poststats.php:95
 #@ post-stats
 msgid "Average:"
 msgstr "Gemiddelde:"
 
-#: post-stats.php:58
+#: poststats.php:100
 #@ post-stats
 msgid "Longest post:"
 msgstr "Langste post:"
 
-#: post-stats.php:60
+#: poststats.php:102
 #@ post-stats
 msgid "Shortest post:"
 msgstr "Kortste post:"
 
-#: post-stats.php:101
+#: poststats.php:144
 #@ post-stats
 msgid "year"
 msgid_plural "years"
 msgstr[0] "jaar"
 msgstr[1] "jaren"
 
-#: post-stats.php:104
+#: poststats.php:147
 #@ post-stats
 msgid "month"
 msgid_plural "months"
 msgstr[0] "maand"
 msgstr[1] "maanden"
 
-#: post-stats.php:107
+#: poststats.php:150
 #@ post-stats
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dagen"
 
-#: post-stats.php:110
+#: poststats.php:153
 #@ post-stats
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "uur"
 msgstr[1] "uren"
 
-#: post-stats.php:113
+#: poststats.php:156
 #@ post-stats
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuut"
 msgstr[1] "minuten"
 
-#: post-stats.php:116
+#: poststats.php:159
 #@ post-stats
 msgid "seconde"
 msgid_plural "secondes"
 msgstr[0] "seconde"
 msgstr[1] "seconden"
 
-#: post-stats.php:125
+#: poststats.php:169
 #, php-format
 #@ post-stats
 msgid "This post has %d words."
 msgstr "Deze post heeft %d woorden."
 
-#: post-stats.php:127
+#: poststats.php:171
 #, php-format
 #@ post-stats
 msgid "It will take approximately %s for reading it."
 msgstr "Het duurt ongeveer %s voor het lezen."
 
-#: post-stats.php:221
+#: poststats.php:249
 #@ post-stats
 msgid "Very slow reader"
 msgstr "Zeer langzame lezer"
 
-#: post-stats.php:222
+#: poststats.php:250
 #@ post-stats
 msgid "Slow reader"
 msgstr "Langzame lezer"
 
-#: post-stats.php:223
+#: poststats.php:251
 #@ post-stats
 msgid "Average reader"
 msgstr "Gemiddelde lezer"
 
-#: post-stats.php:224
+#: poststats.php:252
 #@ post-stats
 msgid "Good reader"
 msgstr "Goede lezer"
 
-#: post-stats.php:225
+#: poststats.php:253
 #@ post-stats
 msgid "Excellent reader"
 msgstr "Uitstekende lezer"
 
-#: post-stats.php:240
+#: poststats.php:263
 #@ post-stats
 msgid "words/minute"
 msgstr "woorden/minuut"
 
-#: post-stats.php:248
+#: poststats.php:271
 msgid "Save Changes"
 msgstr ""
 
-#: post-stats.php:67
+#: poststats.php:108
 #@ post-stats
 msgid "Total reading time:"
 msgstr "Totale lezingstijd:"
+
+#: poststats.php:184
+msgid "Settings"
+msgstr ""
 

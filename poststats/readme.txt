@@ -28,15 +28,13 @@ Optionally, displays additional statistics before each post.
 
 1. Upload `poststats` directory to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Configure the plugin's option.
+3. Configure the plugin's settings.
 
 == Frequently Asked Questions ==
 
 = What are the requirements ? =
-* At least Wordpress 2.9.2
+* Wordpress 2.9.2 or newer
 * PHP 5
-
-An answer to that question.
 
 == Screenshots ==
 

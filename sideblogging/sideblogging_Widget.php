@@ -11,8 +11,8 @@ class SideBlogging_Widget extends WP_Widget {
 	}
 
 	function form($instance) {
-		$title = esc_attr($instance['title']);
-		$number = intval($instance['number']);
+		$title = isset($instance['title']) ? esc_attr($instance['title']) : '';
+		$number = isset($instance['number']) ? intval($instance['number']) : '';
 			
 		if($number <= 0)
 			$number = 5;
@@ -40,39 +40,70 @@ class SideBlogging_Widget extends WP_Widget {
         }
 
 	function widget($args, $instance) {
-            // outputs the content of the widget
-            extract($args);
-            $title = apply_filters('widget_title', $instance['title']);
-			$number = intval($instance['number']);
-						
-            if(empty($title))
-				$title = __('Asides',Sideblogging::domain);
-			if($number <= 0)
-				$number = 5;
+		// outputs the content of the widget
+		extract($args);
+		$title = apply_filters('widget_title', $instance['title']);
+		$number = intval($instance['number']);
+		
+		if(empty($title))
+			$title = __('Asides',Sideblogging::domain);
+		if($number <= 0)
+			$number = 5;
 				
-            echo $before_widget;
-            echo $before_title.$title.$after_title;
-            global $query_string;
-			query_posts('post_type=asides&posts_per_page='.$number.'&orderby=date&order=DESC');
-			
-			//The Loop
-			if (have_posts())
+		echo $before_widget;
+		echo $before_title.$title.$after_title;
+		global $query_string;
+		query_posts('post_type=asides&posts_per_page='.$number.'&orderby=date&order=DESC');
+
+		//The Loop
+		if (have_posts())
+		{
+			echo '<ul>';
+			while ( have_posts() )
 			{
-				echo '<ul>';
-				while ( have_posts() )
+				the_post();
+				$content = get_the_content();
+				
+				echo '<li>'.get_the_title();
+
+				if(strlen($content) > 0)
 				{
-					the_post();
-					echo '<li>'.get_the_title();
+					if(preg_match('#youtube.com|dailymotion.com|wat.tv|.flv|&lt;video#',$content))
+					{
+						$image = 'video.gif';
+						$alt = 'Lien vers la vidéo';
+					}
+					else if(preg_match('#.mp3|.ogg|&lt;audio#',$content))
+					{
+						$image = 'music.gif';
+						$alt = 'Lien vers le son';
+					}
+					else if(preg_match('#&lt;embed|&lt;object#',$content))
+					{
+						$image = 'video.gif';
+						$alt = 'Lien vers la vidéo';
+					}
+					else if(preg_match('#&lt;img#',$content))
+					{
+						$image = 'image.gif';
+						$alt = 'Lien vers l\'image';
+					}
+					else
+					{
+						$image = 'other.gif';
+						$alt = 'Lien vers la brève';
+					}
 					
-					if(strlen(get_the_content()) > 0)
-						echo ' <a href="'.get_permalink().'">#</a>';
-					
-					echo '</li>';
+					echo ' <a href="'.get_permalink().'">
+					<img src="'.SIDEBLOGGING_URL.'/images/'.$image.'" alt="'.$alt.'" title="'.$alt.'" />
+					</a>';
 				}
-				echo '</ul>';
+				echo '</li>';
 			}
-			wp_reset_query();
-            echo $after_widget;
+			echo '</ul>';
+		}
+		wp_reset_query();
+		echo $after_widget;
+		}
 	}
-}
 ?>

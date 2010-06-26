@@ -188,7 +188,7 @@ class PostStats {
 	
 	/* Dashboard Widget */
 	function add_dashboard_widget() {
-			wp_add_dashboard_widget('example_dashboard_widget', __('Posts Statistics',POSTSTATS_TEXTDOMAIN), array(&$this,'diplay_stats'));
+			wp_add_dashboard_widget('poststats_dashboard_widget', __('Posts Statistics',POSTSTATS_TEXTDOMAIN), array(&$this,'diplay_stats'));
 	}
 	
 	// Register settings
@@ -209,7 +209,7 @@ class PostStats {
 		$options['content'] = 'off';
 		$options['dashboard'] = 'on';
 		$options['speed'] = '200';
-		update_option('poststats',$options);
+		add_option('poststats',$options);
 	}
 
 	// Remove plugin settings
