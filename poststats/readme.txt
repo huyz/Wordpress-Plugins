@@ -4,7 +4,7 @@ Donate link: http://www.boverie.eu/
 Tags: reading time,stats,word count
 Requires at least: 2.9
 Tested up to: 3.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Statistics about posts length and reading time on dashboard and/or sidebar widget.
 Optionally, display estimated reading time before each post.
@@ -43,6 +43,9 @@ Optionally, displays additional statistics before each post.
 3. Post length and estimated reading time inserted automatically before each post content. 
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix l10n.
 
 = 1.0 =
 * First public version.

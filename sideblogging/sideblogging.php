@@ -20,6 +20,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// Installation
+register_activation_hook(__FILE__,'Sideblogging::activation');
+// Désinstallation
+register_deactivation_hook(__FILE__,'Sideblogging::deactivation');
+
 if(!class_exists('Sideblogging')):
 class Sideblogging {
 
@@ -37,6 +42,9 @@ class Sideblogging {
 		include dirname(__FILE__).'/sideblogging_Widget.php';
 		add_action('widgets_init', create_function('', 'return register_widget("SideBlogging_Widget");'));
 		
+		// Définir l'action que exécute la tâche planifiée
+		add_action('sideblogging_cron', array(&$this,'cron'));
+
 		if(is_admin())
 		{
 			// Register option settings
@@ -52,6 +60,27 @@ class Sideblogging {
 			add_action('wp_dashboard_setup', array(&$this,'add_dashboard_widget'));
 			add_action('admin_head-index.php', array(&$this,'dashboard_admin_js'));
 			add_action('wp_ajax_sideblogging_widget_post', array(&$this,'ajax_action'));
+		}
+	}
+	
+	function activation() {
+		wp_schedule_event(time(), 'daily', 'sideblogging_cron');
+		add_option('sideblogging',array());
+	}
+	
+	function deactivation() {
+		wp_clear_scheduled_hook('sideblogging_cron');
+		//delete_option('sideblogging');
+	}
+	
+	function cron() {
+		global $wpdb;
+		$options = get_option('sideblogging');
+		if(isset($options['purge']) && intval($options['purge']) != 0)
+		{
+			$purge = intval($options['purge']);
+			$timestamp = time()-86400*$purge;
+			$wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'asides' AND UNIX_TIMESTAMP(post_modified) <= $timestamp");
 		}
 	}
 
@@ -76,7 +105,7 @@ class Sideblogging {
 	
 	function add_dashboard_widget() {
 		wp_add_dashboard_widget('sideblogging_dashboard_widget', __('Asides',self::domain), array(&$this,'dashboard_widget'));
-	}	
+	}
 	
 	function dashboard_widget() {
 		echo '<form id="sideblogging_dashboard_form" action="" method="post" class="dashboard-widget-control-form">';
@@ -165,7 +194,7 @@ class Sideblogging {
 		session_start();
 		if(isset($_GET['action']) && $_GET['action'] == 'connect_to_twitter' && wp_verify_nonce($_GET['_wpnonce'],'connect_to_twitter')) // Twitter redirection
 		{
-			require_once('twitteroauth/twitteroauth.php');
+			require_once('libs/twitteroauth.php');
 			$options = get_option('sideblogging');
 			$connection = new TwitterOAuth($options['twitter_consumer_key'], $options['twitter_consumer_secret']);
 			$request_token = @$connection->getRequestToken(SIDEBLOGGING_OAUTH_CALLBACK); // Génère des notices en cas d'erreur de connexion
@@ -193,12 +222,24 @@ class Sideblogging {
 
 		if($post->post_date == $post->post_modified)
 		{
-			$shortlink = get_bloginfo('url').'/?p='.$post_ID;
 			$options = get_option('sideblogging');
+			$permalink = get_permalink($post_ID);
+						
+			if(!isset($options['shortener']) || $options['shortener'] == 'native')
+				$shortlink = wp_get_shortlink($post_ID);
+			else
+			{
+				require_once 'libs/shortlinks.class.php';
+				$shortlinks = new Shortlinks();
+				$shortlink = $shortlinks->getLink($permalink,$options['shortener']);
+			}
+			
+			if(!$shortlink)
+				$shortlink = get_bloginfo('url').'/?p='.$post_ID;
 			
 			if(isset($options['twitter_token'])) // Twitter est configuré
 			{
-				require_once('twitteroauth/twitteroauth.php');
+				require_once('libs/twitteroauth.php');
 				$content = $post->post_title;
 				
 				if(strlen($post->post_content) > 0)
@@ -211,16 +252,15 @@ class Sideblogging {
 			
 			if(isset($options['facebook_token']))
 			{
-				if( !class_exists( 'WP_Http' ) )
-					include_once( ABSPATH . WPINC. '/class-http.php' );			
+				if(!class_exists('WP_Http'))
+					include_once(ABSPATH.WPINC.'/class-http.php');			
 				$request = new WP_Http;
 				$body = $options['facebook_token']['access_token'].'&message='.$post->post_title;
 				
 				if(strlen($post->post_content) > 0)
-					$body .= '&link='.$shortlink;
+					$body .= '&link='.$permalink;
 					
 				$result = $request->request('https://graph.facebook.com/me/feed', array('body' => $body, 'sslverify' => false, 'method' => 'POST'));
-				//$body = json_decode($result['body'],true);
 			}
 			
 		}
@@ -235,7 +275,7 @@ class Sideblogging {
 		if(isset($_GET['oauth_verifier'])) // Twitter vérification finale
 		{
 			$options = get_option('sideblogging');
-			require_once('twitteroauth/twitteroauth.php');
+			require_once('libs/twitteroauth.php');
 			$connection = new TwitterOAuth($options['twitter_consumer_key'], $options['twitter_consumer_secret'], $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 			$access_token = $connection->getAccessToken($_GET['oauth_verifier']);
 			unset($_SESSION['oauth_token']);
@@ -292,14 +332,40 @@ class Sideblogging {
 		}
 		
 		$options = get_option('sideblogging');
-
-		echo '<h3>'.__('Applications Settings',self::domain).'</h3>';
+		require_once 'libs/shortlinks.class.php';
 		
 		echo '<form action="options.php" method="post">';
 		settings_fields('sideblogging_settings');
 		
+		echo '<h3>'.__('General Settings',self::domain).'</h3>';
+
 		echo '<table class="form-table">';
 		
+		echo '<tr valign="top">
+		<th scope="row">
+		<label for="sideblogging_purge">'.__('Purge asides older than ',self::domain).'</label>
+		</th><td>';
+		echo '<input type="text" size="4" value="'.$options['purge'].'" name="sideblogging[purge]" id="sideblogging_purge" />';
+		echo ' '.__('days',self::domain).' ('.__('0 for keeping asides forever',self::domain).')</td></tr>';
+		
+		echo '<tr valign="top">
+		<th scope="row">
+		<label for="sideblogging_shortener">'.__('Url shortener',self::domain).'</label>
+		</th><td>';
+		echo '<select name="sideblogging[shortener]" id="sideblogging_shortener">';
+		echo '<option value="native">Native</option>';
+		foreach(Shortlinks::getSupportedServices() as $id => $name)
+		{
+			echo '<option '.selected($id,$options['shortener']).' value="'.$id.'">'.$name.'</option>';
+		}
+		echo '</select>';
+		echo '</td></tr>';
+		
+		echo '</table>';
+		
+		echo '<h3>'.__('Applications Settings',self::domain).'</h3>';
+
+		echo '<table class="form-table">';
 		echo '<tr valign="top">
 		<th scope="row">
 		<label for="sideblogging_twitter_consumer_key">Twitter Consumer Key</label>
@@ -327,11 +393,13 @@ class Sideblogging {
 		</th><td>';
 		echo '<input type="text" class="regular-text" value="'.$options['facebook_consumer_secret'].'" name="sideblogging[facebook_consumer_secret]" id="sideblogging_facebook_consumer_secret" />';
 		echo '</td></tr>';
-		
 		echo '</table>';
 		
+
 		echo '<p>'.__('Don\'t forget to look at the contextual help (in the top right of page) for more informations about keys.',self::domain).'</p>';
 		echo '<p class="submit"><input type="submit" class="button-primary" value="'.__('Save Changes').'" /></p>';
+		
+		echo '</form>';
 		
 		echo '<h3>'.__('Republish on Twitter',self::domain).'</h3>';
 	
@@ -395,6 +463,8 @@ class Sideblogging {
 		$options['twitter_consumer_secret'] = esc_attr($options['twitter_consumer_secret']);
 		$options['facebook_consumer_key'] = esc_attr($options['facebook_consumer_key']);
 		$options['facebook_consumer_secret'] = esc_attr($options['facebook_consumer_secret']);
+		$options['shortener'] = esc_attr($options['shortener']);
+		$options['purge'] = (ctype_digit($options['purge'])) ? intval($options['purge']) : 0;
 		
 		$options = array_merge($options_old,$options);
 		return $options;

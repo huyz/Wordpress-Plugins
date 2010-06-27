@@ -166,3 +166,13 @@ msgstr "Temps de lecture total:"
 msgid "Settings"
 msgstr ""
 
+#: poststats.php:236
+#@ post-stats
+msgid "Display statistics before each post"
+msgstr "Afficher les statistiques avant chaque article"
+
+#: poststats.php:243
+#@ post-stats
+msgid "Display widget on dashboard"
+msgstr "Afficher le widget sur le tableau de bord"
+

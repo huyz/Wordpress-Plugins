@@ -3,7 +3,7 @@
  * Plugin Name: Post Stats
  * Plugin URI: http://blog.boverie.eu/poststats-statistiques-des-articles/
  * Description: Statistics about posts length and reading time on dashboard and more.
- * Version: 1.0
+ * Version: 1.0.1
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
  */
@@ -67,7 +67,7 @@ class PostStats {
 		add_action('widgets_init', create_function('', 'return register_widget("PostStats_Widget");'));
 	}
 
-	// Create the function to output the contents of the widget
+	// Create the function to output the content of the widget
 	function diplay_stats() {
 		global $wpdb;
 		$options = get_option('poststats');
@@ -233,14 +233,14 @@ class PostStats {
 		
 		echo '<tr valign="top">
 		<th scope="row">
-		<label for="poststats_content">Afficher les statistiques au début de chaque article</label>
+		<label for="poststats_content">'.__('Display statistics before each post',POSTSTATS_TEXTDOMAIN).'</label>
 		</th><td>
 		<input type="checkbox" id="poststats_content" name="poststats[content]" '.checked('on',$options['content'],false).'" />
 		</td></tr>';
 
 		echo '<tr valign="top">
 		<th scope="row">
-		<label for="poststats_dashboard">Afficher le widget sur le dashboard</label>
+		<label for="poststats_dashboard">'.__('Display widget on dashboard', POSTSTATS_TEXTDOMAIN).'</label>
 		</th><td>
 		<input type="checkbox" id="poststats_dashboard" name="poststats[dashboard]" '.checked('on',$options['dashboard'],false).'" />
 		</td></tr>';
