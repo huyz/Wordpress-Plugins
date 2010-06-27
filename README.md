@@ -1,6 +1,11 @@
 Liste des plugins pour Wordpress sur ce dépôt
 =============================================
 [Télécharger tout](http://github.com/cedbv/Wordpress-Plugins/zipball/master)
+BlogAdmin for dummies 0.0.1
+------------------------
+L’administration d’un blog pour les nuls (ou quand l’administrateur du blog est un nul).  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/blogadmin-for-dummies/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/blogadmin-for-dummies.zip)
+
 Lightbox Post Preview 0.1
 ------------------------
 Affiche l’aperçu d’un article dans une lightbox.  
@@ -8,7 +13,7 @@ Affiche l’aperçu d’un article dans une lightbox.
 
 More Embeds 0.1
 ------------------------
-Add provider for « Auto-Embed » feature (currently only Wat.tv).  
+Add provider for “Auto-Embed” feature (currently only Wat.tv).  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/more-embeds/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/more-embeds.zip)
 
 Multisite Restore Features 0.1
@@ -18,7 +23,7 @@ Activate post by mail and custom ping sites in a multisite configuration.
 
 Multisite Switcher 0.1
 ------------------------
-Fast switch between sites administration installed on the same « network ».  
+Fast switch between sites administration installed on the same “network”.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/multisite-switcher/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/multisite-switcher.zip)
 
 Pending Posts Widget 0.1

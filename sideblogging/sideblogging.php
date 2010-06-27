@@ -59,17 +59,17 @@ class Sideblogging {
 	function menu() {
 		$screen = add_options_page('SideBlogging', ' SideBlogging', 'manage_options', 'sideblogging', array(&$this,'options_page'));
 		
-		$text = '<h5>Aide de Sideblogging</h5>';
-		$text .= '<p><a target="_blank" href="http://dev.twitter.com/apps/new">Créer une application Twitter</a><br />';
-		$text .= '<a target="_blank" href="http://www.facebook.com/developers/apps.php">Créer une application Facebook</a></p>';
+		$text = '<h5>'.__('Sideblogging help',self::domain).'</h5>';
+		$text .= '<p><a target="_blank" href="http://dev.twitter.com/apps/new">'.__('Create a Twitter application',self::domain).'</a><br />';
+		$text .= '<a target="_blank" href="http://www.facebook.com/developers/apps.php">'.__('Create a Facebook application',self::domain).'</a></p>';
 		
-		$text .= '<h5>Détails spécifiques à Facebook</h5>';
-		$text .= '<p>Pour Facebook, il peut être nécessaire de mofier le paramètre URL Connect.<br />
-				Pour ce faire :</p>
+		$text .= '<h5>'.__('About Facebook',self::domain).'</h5>';
+		$text .= '<p>'.__('For Facebook, you may need to modify the URL Connect',self::domain).'.<br />
+				'.__('To do:',self::domain).'</p>
 				<ul>
-				<li>Modifier les paramètres de l\'application.</li>
-				<li>Allez dans la rubrique <em>Connexion</em>.</li>
-				<li>Metttez <strong>'.get_bloginfo('url').' </strong>dans le champ URL Connect.</li>
+				<li>'.__('Go to application settings',self::domain).'.</li>
+				<li>'.__('Go to section <em>Connection</em>',self::domain).'.</li>
+				<li>'.sprintf(__('Put %s in the field URL Connect',self::domain),'<strong>'.get_bloginfo('url').'</strong>').'.</li>
 				</ul>';
 		add_contextual_help($screen,$text);
 	}
@@ -84,11 +84,11 @@ class Sideblogging {
 		echo '<p style=height:20px;display:none;" id="sideblogging-status"></p>';
 		//echo '<p><label for="sideblogging-title">Statut</label><br />';
 		echo '<textarea name="sideblogging-title" id="sideblogging-title" style="width:100%"></textarea><br />';
-		echo '<span id="sideblogging-count">140</span> caractères restants.<br />';
+		echo '<span id="sideblogging-count">140</span> '.__('characters left',self::domain).'.<br />';
 		echo '<input type="checkbox" name="sideblogging-draft" id="sideblogging-draft" />
-		<label for="sideblogging-draft">Ajouter plus d\'informations.</label>';
+		<label for="sideblogging-draft">'.__('Add additional content',self::domain).'.</label>';
 		echo '</p>';
-		echo '<p class="submit"><input type="submit" class="button-primary" value="' . esc_attr__( 'Publish' ) . '" /> 
+		echo '<p class="submit"><input type="submit" id="sideblogging-submit" class="button-primary" value="' . esc_attr__( 'Publish' ) . '" /> 
 		<img style="display:none;" src="'.SIDEBLOGGING_URL.'/images/loading.gif" alt="Loading..." id="sideblogging-loading" /></p>';
 		echo '</form>';
 	}
@@ -99,6 +99,7 @@ class Sideblogging {
 		jQuery(document).ready(function($) {
 			$('#sideblogging_dashboard_form').submit(function() {
 				$('#sideblogging-loading').show();
+				$('#sideblogging-submit').attr('disabled','disabled');
 				var data = {
 					action: 'sideblogging_widget_post',
 					_ajax_nonce: '<?php echo wp_create_nonce('sideblogging-quickpost'); ?>',
@@ -109,7 +110,7 @@ class Sideblogging {
 					if(response == 'ok')
 					{
 						$('#sideblogging-title').val('');
-						$('#sideblogging-status').html('<strong>Brève publiée.</strong>')
+						$('#sideblogging-status').html('<strong><?php _e('Aside published',self::domain); ?>.</strong>')
 						.addClass('updated').removeClass('error')
 						.show(200);
 					}
@@ -119,10 +120,11 @@ class Sideblogging {
 					}
 					else
 					{
-						$('#sideblogging-status').html('<strong>Une erreur est survenue.</strong>')
+						$('#sideblogging-status').html('<strong><?php _e('An error occurred',self::domain); ?>.</strong>')
 						.addClass('error').removeClass('updated')
 						.show(200);
 					}
+					$('#sideblogging-submit').attr('disabled','');
 				});
 				return false;
 			});
@@ -161,7 +163,7 @@ class Sideblogging {
 	/* Gère la redirection vers les pages de demande de connexion Oauth */
 	function connect_to_oauth() {
 		session_start();
-		if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'],'connect_to_twitter')) // Twitter redirection
+		if(isset($_GET['action']) && $_GET['action'] == 'connect_to_twitter' && wp_verify_nonce($_GET['_wpnonce'],'connect_to_twitter')) // Twitter redirection
 		{
 			require_once('twitteroauth/twitteroauth.php');
 			$options = get_option('sideblogging');
@@ -175,9 +177,9 @@ class Sideblogging {
 				wp_redirect($url.'&oauth_access_type=write');
 			}
 			else
-				wp_die('Twitter est indisponible pour le moment. Veuillez vérifier vos clés ou ré-essayer plus tard.');
+				wp_die(__('Twitter is currently unavailable. Please check your keys or try again later.',self::domain));
 		}
-		else if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'],'connect_to_facebook')) // Facebook redirection
+		else if(isset($_GET['action']) && $_GET['action'] == 'connect_to_facebook' && wp_verify_nonce($_GET['_wpnonce'],'connect_to_facebook')) // Facebook redirection
 		{
 			$options = get_option('sideblogging');
 			$url = 'https://graph.facebook.com/oauth/authorize?client_id='.$options['facebook_consumer_key'].'&redirect_uri='.SIDEBLOGGING_OAUTH_CALLBACK.'&scope=publish_stream,offline_access';
@@ -240,14 +242,17 @@ class Sideblogging {
 			unset($_SESSION['oauth_token_secret']);
 			if (200 == $connection->http_code)
 			{
-				$options['twitter_token'] = $access_token;
+				$options['twitter_token']['oauth_token'] = esc_attr($access_token['oauth_token']);
+				$options['twitter_token']['oauth_token_secret'] = esc_attr($access_token['oauth_token_secret']);
+				$options['twitter_token']['user_id'] = intval($access_token['user_id']);
+				$options['twitter_token']['screen_name'] = esc_attr($access_token['screen_name']);
 				update_option('sideblogging',$options);
-				echo '<div class="updated"><p><strong>Compte Twitter enregistré.</strong></p></div>';
+				echo '<div class="updated"><p><strong>'.__('Twitter account registered',self::domain).'.</strong></p></div>';
 			}
 			else
-				echo '<div class="error"><p><strong>Erreur lors de la liaison avec Twitter.</strong></p></div>';
+				echo '<div class="error"><p><strong>'.__('Error during the connection with Twitter',self::domain).'.</strong></p></div>';
 		}
-		else if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'disconnect_from_twitter')) // Déconnexion de Twitter
+		else if(isset($_GET['action']) && $_GET['action'] == 'disconnect_from_twitter' && wp_verify_nonce($_GET['_wpnonce'], 'disconnect_from_twitter')) // Déconnexion de Twitter
 		{
 			$options = get_option('sideblogging');
 			$options['twitter_token'] = '';
@@ -270,16 +275,16 @@ class Sideblogging {
 			
 			if(is_array($me))
 			{
-				$options['facebook_token']['access_token'] = $token;
-				$options['facebook_token']['name'] = $me['name'];
-				$options['facebook_token']['link'] = $me['link'];
+				$options['facebook_token']['access_token'] = esc_attr($token);
+				$options['facebook_token']['name'] = esc_attr($me['name']);
+				$options['facebook_token']['link'] = esc_url($me['link']);
 				update_option('sideblogging',$options);
-				echo '<div class="updated"><p><strong>Compte Facebook enregistré.</strong></p></div>';
+				echo '<div class="updated"><p><strong>'.__('Facebook account registered',self::domain).'</strong></p></div>';
 			}
 			else
-				echo '<div class="error"><p><strong>Erreur lors de la liaison avec Facebook.</strong></p></div>';
+				echo '<div class="error"><p><strong>'.__('Error during the connection with Facebook',self::domain).'</strong></p></div>';
 		}
-		else if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'disconnect_from_facebook')) // Déconnexion de Facebook
+		else if(isset($_GET['action']) && $_GET['action'] == 'disconnect_from_facebook' && wp_verify_nonce($_GET['_wpnonce'], 'disconnect_from_facebook')) // Déconnexion de Facebook
 		{
 			$options = get_option('sideblogging');
 			$options['facebook_token'] = '';
@@ -287,8 +292,8 @@ class Sideblogging {
 		}
 		
 		$options = get_option('sideblogging');
-		
-		echo '<h3>Paramètres des applications</h3>';
+
+		echo '<h3>'.__('Applications Settings',self::domain).'</h3>';
 		
 		echo '<form action="options.php" method="post">';
 		settings_fields('sideblogging_settings');
@@ -325,48 +330,46 @@ class Sideblogging {
 		
 		echo '</table>';
 		
-		echo '<p>N\'oubliez pas de consulter l\'aide contextuelle (en haut à droite de la page) pour plus d\'informations sur ces clés.</p>';
-
+		echo '<p>'.__('Don\'t forget to look at the contextual help (in the top right of page) for more informations about keys.',self::domain).'</p>';
 		echo '<p class="submit"><input type="submit" class="button-primary" value="'.__('Save Changes').'" /></p>';
-
 		
-		echo '<h3>Republier sur Twitter</h3>';
+		echo '<h3>'.__('Republish on Twitter',self::domain).'</h3>';
 	
 		if(empty($options['twitter_consumer_key']) || empty($options['twitter_consumer_secret']))
 		{
-			echo '<p>Vous devez configurer l\'application Twitter pour pouvoir vous connecter.</p>';
+			echo '<p>'.__('You must configure Twitter app to be able to sign-in',self::domain).'.</p>';
 		}
 		else if(empty($options['twitter_token']))
 		{
-			echo '<p>Pour publier automatiquement vos brèves sur Twitter, connectez-vous ci-desous :</p>';
-			echo '<p><a href="'.wp_nonce_url('options-general.php?page=sideblogging','connect_to_twitter').'">
-					<img src="'.SIDEBLOGGING_URL.'/images/twitter.png" alt="Connection à Twitter" />
+			echo '<p>'.__('To automatically publish your asides on Twitter, sign-in below:', self::domain).'</p>';
+			echo '<p><a href="'.wp_nonce_url('options-general.php?page=sideblogging&action=connect_to_twitter','connect_to_twitter').'">
+					<img src="'.SIDEBLOGGING_URL.'/images/twitter.png" alt="Connexion à Twitter" />
 				</a></p>';
 		}
 		else
 		{
-			echo '<p>Vous êtes connectés à Twitter en tant que <strong>@'.$options['twitter_token']['screen_name'].'</strong>. ';
-			echo '<a href="'.wp_nonce_url('options-general.php?page=sideblogging','disconnect_from_twitter').'">Changer de compte ou désactiver</a>.</p>';
+			echo '<p>'.sprintf(__('You are connected to Twitter as %s',self::domain),'<strong>@'.$options['twitter_token']['screen_name'].'</strong>').'. ';
+			echo '<a href="'.wp_nonce_url('options-general.php?page=sideblogging&action=disconnect_from_twitter','disconnect_from_twitter').'">'.__('Change account or disable',self::domain).'</a>.</p>';
 		}
 		
 		
-		echo '<h3>Republier sur Facebook</h3>';
+		echo '<h3>'.__('Republish on Facebook',self::domain).'</h3>';
 		
 		if(empty($options['facebook_consumer_key']) || empty($options['facebook_consumer_secret']))
 		{
-			echo '<p>Vous devez configurer l\'application Facebook pour pouvoir vous connecter.</p>';
+			echo '<p>'.__('You must configure Facebook app to be able to sign-in',self::domain).'.</p>';
 		}
 		else if(empty($options['facebook_token']))
 		{
-			echo '<p>Pour publier automatiquement vos brèves sur Facebook, connectez-vous ci-desous :</p>';
-			echo '<p><a href="'.wp_nonce_url('options-general.php?page=sideblogging','connect_to_facebook').'">
-						<img src="'.SIDEBLOGGING_URL.'/images/facebook.gif" alt="Connection à Facebook" />
+			echo '<p>'.__('To automatically publish your asides on Facebook, sign-in below:',self::domain).'</p>';
+			echo '<p><a href="'.wp_nonce_url('options-general.php?page=sideblogging&action=connect_to_facebook','connect_to_facebook').'">
+						<img src="'.SIDEBLOGGING_URL.'/images/facebook.gif" alt="Connexion à Facebook" />
 				</a></p>';
 		}
 		else
 		{
-			echo '<p>Vous êtes connectés à Facebook en tant que '.$options['facebook_token']['name'].'.</strong> ';
-			echo '<a href="'.wp_nonce_url('options-general.php?page=sideblogging','disconnect_from_facebook').'">Changer de compte ou désactiver</a>.</p>';
+			echo '<p>'.sprintf(__('You are connected to Facebook as %s',self::domain),'<strong>'.$options['facebook_token']['name'].'</strong>').'. ';
+			echo '<a href="'.wp_nonce_url('options-general.php?page=sideblogging&action=disconnect_from_facebook','disconnect_from_facebook').'">'.__('Change account or disable',self::domain).'</a>.</p>';
 		}
 		echo '</div>';
 	}
@@ -377,7 +380,23 @@ class Sideblogging {
 	}
 	
 	function filter_options($options) {
+		//TODO: Filtrer les options
+		$options_old = get_option('sideblogging');
 		
+		// Si on change les clés d'applications, oubliez la connexion
+		if($options_old['twitter_consumer_key'] != $options['twitter_consumer_key'] || $options_old['twitter_consumer_secret'] != $options['twitter_consumer_secret'])
+			$options['twitter_token'] = '';
+			
+		if($options_old['facebook_consumer_key'] != $options['facebook_consumer_key'] || $options_old['facebook_consumer_secret'] != $options['facebook_consumer_secret'])
+			$options['facebook_token'] = '';
+
+		// Clean form option
+		$options['twitter_consumer_key'] = esc_attr($options['twitter_consumer_key']);
+		$options['twitter_consumer_secret'] = esc_attr($options['twitter_consumer_secret']);
+		$options['facebook_consumer_key'] = esc_attr($options['facebook_consumer_key']);
+		$options['facebook_consumer_secret'] = esc_attr($options['facebook_consumer_secret']);
+		
+		$options = array_merge($options_old,$options);
 		return $options;
 	}
 	

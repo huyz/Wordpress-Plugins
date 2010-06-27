@@ -68,22 +68,22 @@ class SideBlogging_Widget extends WP_Widget {
 
 				if(strlen($content) > 0)
 				{
-					if(preg_match('#youtube.com|dailymotion.com|wat.tv|.flv|&lt;video#',$content))
+					if(preg_match('#youtube.com|dailymotion.com|wat.tv|.flv|&lt;video|<video#',$content))
 					{
 						$image = 'video.gif';
 						$alt = 'Lien vers la vidéo';
 					}
-					else if(preg_match('#.mp3|.ogg|&lt;audio#',$content))
+					else if(preg_match('#.mp3|.ogg|&lt;audio|<audio#',$content))
 					{
 						$image = 'music.gif';
 						$alt = 'Lien vers le son';
 					}
-					else if(preg_match('#&lt;embed|&lt;object#',$content))
+					else if(preg_match('#&lt;embed|&lt;object|<embed|<object#',$content))
 					{
 						$image = 'video.gif';
 						$alt = 'Lien vers la vidéo';
 					}
-					else if(preg_match('#&lt;img#',$content))
+					else if(preg_match('#&lt;img|<img#',$content))
 					{
 						$image = 'image.gif';
 						$alt = 'Lien vers l\'image';

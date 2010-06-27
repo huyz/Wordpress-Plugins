@@ -19,38 +19,39 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: sideblogging.php:43
+#: sideblogging.php:78
+#: sideblogging.php:388
 #: sideblogging_Widget.php:49
 #@ sideblogging
 msgid "Asides"
 msgstr "Brèves"
 
-#: sideblogging.php:44
+#: sideblogging.php:389
 #@ sideblogging
 msgid "Aside"
 msgstr "Brève"
 
-#: sideblogging.php:51
+#: sideblogging.php:396
 #@ sideblogging
 msgid "Add new aside"
 msgstr "Ajouter une nouvelle brève"
 
-#: sideblogging.php:52
+#: sideblogging.php:397
 #@ sideblogging
 msgid "Edit aside"
 msgstr "Modifier la brève"
 
-#: sideblogging.php:53
+#: sideblogging.php:398
 #@ sideblogging
 msgid "No aside found"
 msgstr "Aucune brève trouvée"
 
-#: sideblogging.php:54
+#: sideblogging.php:399
 #@ sideblogging
 msgid "No aside found in trash"
 msgstr "Aucune brève trouvée dans la corbeille"
 
-#: sideblogging.php:55
+#: sideblogging.php:400
 #@ sideblogging
 msgid "Search asides"
 msgstr "Chercher dans les brèves"
@@ -68,4 +69,161 @@ msgstr "Nombre de brèves à afficher :"
 #@ sideblogging
 msgid "Display asides in a widget"
 msgstr "Affiche les brèves dans un widget"
+
+#: sideblogging.php:91
+msgid "Publish"
+msgstr ""
+
+#: sideblogging.php:331
+msgid "Save Changes"
+msgstr ""
+
+#: sideblogging.php:62
+#@ sideblogging
+msgid "Sideblogging help"
+msgstr "Aide de Sideblogging"
+
+#: sideblogging.php:63
+#@ sideblogging
+msgid "Create a Twitter application"
+msgstr "Créer une application Twitter"
+
+#: sideblogging.php:64
+#@ sideblogging
+msgid "Create a Facebook application"
+msgstr "Créer une application Facebook"
+
+#: sideblogging.php:66
+#@ sideblogging
+msgid "About Facebook"
+msgstr "À propos de Facebook"
+
+#: sideblogging.php:87
+#@ sideblogging
+msgid "characters left"
+msgstr "caractères restants"
+
+#: sideblogging.php:89
+#@ sideblogging
+msgid "Add additional content"
+msgstr "Ajouter du contenu additionnel"
+
+#: sideblogging.php:113
+#@ sideblogging
+msgid "Aside published"
+msgstr "Brève publiée"
+
+#: sideblogging.php:123
+#@ sideblogging
+msgid "An error occurred"
+msgstr "Une erreur est survenue"
+
+#: sideblogging.php:180
+#@ sideblogging
+msgid "Twitter is currently unavailable. Please check your keys or try again later."
+msgstr "Twitter est indisponible pour le moment. Veuillez vérifier vos clés ou ré-essayer plus tard."
+
+#: sideblogging.php:247
+#@ sideblogging
+msgid "Twitter account registered"
+msgstr "Compte Facebook enregistré"
+
+#: sideblogging.php:250
+#@ sideblogging
+msgid "Error during the connection with Twitter"
+msgstr "Une erreur est survenue pendant la connexion avec Twitter"
+
+#: sideblogging.php:279
+#@ sideblogging
+msgid "Facebook account registered"
+msgstr "Compte Facebook enregistré"
+
+#: sideblogging.php:282
+#@ sideblogging
+msgid "Error during the connection with Facebook"
+msgstr "Une erreur est survenue pendant la connexion avec Facebook"
+
+#: sideblogging.php:293
+#@ sideblogging
+msgid "Applications Settings"
+msgstr "Paramètres des applications"
+
+#: sideblogging.php:330
+#@ sideblogging
+msgid "Don't forget to look at the contextual help (in the top right of page) for more informations about keys."
+msgstr "N'oubliez pas de consulter l'aide contextuelle (en haut à droite de la page) pour plus d'informations sur ces clés."
+
+#: sideblogging.php:333
+#@ sideblogging
+msgid "Republish on Twitter"
+msgstr "Republier sur Twitter"
+
+#: sideblogging.php:337
+#@ sideblogging
+msgid "You must configure Twitter app to be able to sign-in"
+msgstr "Vous devez configurer l'application Twitter pour pouvoir vous connecter"
+
+#: sideblogging.php:341
+#@ sideblogging
+msgid "To automatically publish your asides on Twitter, sign-in below:"
+msgstr "Pour publier automatiquement vos brèves sur Twitter, connectez-vous ci-desous :"
+
+#: sideblogging.php:353
+#@ sideblogging
+msgid "Republish on Facebook"
+msgstr "Republier sur Facebook"
+
+#: sideblogging.php:357
+#@ sideblogging
+msgid "You must configure Facebook app to be able to sign-in"
+msgstr "Vous devez configurer l'application Facebook pour pouvoir vous connecter"
+
+#: sideblogging.php:361
+#@ sideblogging
+msgid "To automatically publish your asides on Facebook, sign-in below:"
+msgstr "Pour publier automatiquement vos brèves sur Facebook, connectez-vous ci-desous :"
+
+#: sideblogging.php:67
+#@ sideblogging
+msgid "For Facebook, you may need to modify the URL Connect"
+msgstr "Pour Facebook, il peut être nécessaire de mofier le paramètre URL Connect"
+
+#: sideblogging.php:68
+#@ sideblogging
+msgid "To do:"
+msgstr "Pour se faire :"
+
+#: sideblogging.php:70
+#@ sideblogging
+msgid "Go to application settings"
+msgstr "Modifier les paramètres de l'application"
+
+#: sideblogging.php:71
+#@ sideblogging
+msgid "Go to section <em>Connection</em>"
+msgstr "Allez dans la rubrique <em>Connexion</em>"
+
+#: sideblogging.php:72
+#, php-format
+#@ sideblogging
+msgid "Put %s in the field URL Connect"
+msgstr "Metttez %s dans le champ URL Connect"
+
+#: sideblogging.php:348
+#, php-format
+#@ sideblogging
+msgid "You are connected to Twitter as %s"
+msgstr "Vous êtes connectés à Twitter en tant que %s"
+
+#: sideblogging.php:349
+#: sideblogging.php:369
+#@ sideblogging
+msgid "Change account or disable"
+msgstr "Changer de compte ou désactiver"
+
+#: sideblogging.php:368
+#, php-format
+#@ sideblogging
+msgid "You are connected to Facebook as %s"
+msgstr "Vous êtes connectés à Facebook en tant que %s"
 
