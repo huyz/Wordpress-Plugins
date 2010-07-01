@@ -126,7 +126,7 @@ msgstr "Twitter est indisponible pour le moment. Veuillez vérifier vos clés ou
 #: sideblogging.php:290
 #@ sideblogging
 msgid "Twitter account registered"
-msgstr "Compte Facebook enregistré"
+msgstr "Compte Twitter enregistré"
 
 #: sideblogging.php:293
 #@ sideblogging

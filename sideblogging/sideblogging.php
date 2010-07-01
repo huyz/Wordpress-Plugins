@@ -66,6 +66,13 @@ class Sideblogging {
 	function activation() {
 		wp_schedule_event(time(), 'daily', 'sideblogging_cron');
 		add_option('sideblogging',array());
+		$options = get_option('sideblogging');
+		if(empty($options['twitter_consumer_key']) || empty($options['twitter_consumer_secret']))
+		{
+			$options['twitter_consumer_key'] = '57iUTYmR4uTs8Qt4gDX9Ww';
+			$options['twitter_consumer_secret'] = 'weDOZuv1dbaPffO8ZsEsVg25WPpugnIBAhlcsJeM';
+		}
+		update_option('sideblogging',$options);
 	}
 	
 	function deactivation() {
@@ -89,8 +96,8 @@ class Sideblogging {
 		$screen = add_options_page('SideBlogging', ' SideBlogging', 'manage_options', 'sideblogging', array(&$this,'options_page'));
 		
 		$text = '<h5>'.__('Sideblogging help',self::domain).'</h5>';
-		$text .= '<p><a target="_blank" href="http://dev.twitter.com/apps/new">'.__('Create a Twitter application',self::domain).'</a><br />';
-		$text .= '<a target="_blank" href="http://www.facebook.com/developers/apps.php">'.__('Create a Facebook application',self::domain).'</a></p>';
+		$text .= '<p><a target="_blank" href="http://twitter.com/apps/new">'.__('Create a Twitter application',self::domain).'</a> (<a target="_blank" href="http://www.youtube.com/watch?v=TEpR1M1R9nI">'.__('video tutorial').'</a>)<br />';
+		$text .= '<a target="_blank" href="http://www.facebook.com/developers/apps.php">'.__('Create a Facebook application',self::domain).'</a> (<a target="_blank" href="http://www.youtube.com/watch?v=0EH2WQdnvUg">'.__('video tutorial').'</a>)</p>';
 		
 		$text .= '<h5>'.__('About Facebook',self::domain).'</h5>';
 		$text .= '<p>'.__('For Facebook, you may need to modify the URL Connect',self::domain).'.<br />
@@ -98,7 +105,7 @@ class Sideblogging {
 				<ul>
 				<li>'.__('Go to application settings',self::domain).'.</li>
 				<li>'.__('Go to section <em>Connection</em>',self::domain).'.</li>
-				<li>'.sprintf(__('Put %s in the field URL Connect',self::domain),'<strong>'.get_bloginfo('url').'</strong>').'.</li>
+				<li>'.sprintf(__('Put %s in the field URL Connect',self::domain),'<strong>'.get_bloginfo('url').'/</strong>').'.</li>
 				</ul>';
 		add_contextual_help($screen,$text);
 	}
@@ -231,15 +238,16 @@ class Sideblogging {
 			{
 				require_once 'libs/shortlinks.class.php';
 				$shortlinks = new Shortlinks();
+				$shortlinks->setApi($options['shortener_login'],$options['shortener_password']);
 				$shortlink = $shortlinks->getLink($permalink,$options['shortener']);
 			}
 			
 			if(!$shortlink)
 				$shortlink = get_bloginfo('url').'/?p='.$post_ID;
-			
+
 			if(isset($options['twitter_token'])) // Twitter est configuré
 			{
-				require_once('libs/twitteroauth.php');
+				require_once 'libs/twitteroauth.php';
 				$content = $post->post_title;
 				
 				if(strlen($post->post_content) > 0)
@@ -252,17 +260,13 @@ class Sideblogging {
 			
 			if(isset($options['facebook_token']))
 			{
-				if(!class_exists('WP_Http'))
-					include_once(ABSPATH.WPINC.'/class-http.php');			
-				$request = new WP_Http;
 				$body = $options['facebook_token']['access_token'].'&message='.$post->post_title;
 				
 				if(strlen($post->post_content) > 0)
 					$body .= '&link='.$permalink;
-					
-				$result = $request->request('https://graph.facebook.com/me/feed', array('body' => $body, 'sslverify' => false, 'method' => 'POST'));
+
+				wp_remote_post('https://graph.facebook.com/me/feed', array('body' => $body, 'sslverify' => false));
 			}
-			
 		}
 		return $post_ID;
 	}
@@ -300,18 +304,13 @@ class Sideblogging {
 		}
 		else if(isset($_GET['code'])) // Facebook vérification finale
 		{
-			if( !class_exists( 'WP_Http' ) )
-				include_once( ABSPATH . WPINC. '/class-http.php' );
-				
 			$options = get_option('sideblogging');
-			
-			$request = new WP_Http;
+
 			$url = 'https://graph.facebook.com/oauth/access_token?client_id='.$options['facebook_consumer_key'].'&redirect_uri='.SIDEBLOGGING_OAUTH_CALLBACK.'&client_secret='.$options['facebook_consumer_secret'].'&code='.esc_attr($_GET['code']);
-			$result = $request->request($url, array('sslverify' => false));
-			$token = $result['body']; 
-			
-			$result = $request->request('https://graph.facebook.com/me?'.$token, array('sslverify' => false));
-			$me = json_decode($result['body'],true);
+			$result = wp_remote_get($url, array('sslverify' => false));
+			$token = wp_remote_retrieve_body($result); 
+			$result = wp_remote_get('https://graph.facebook.com/me?'.$token, array('sslverify' => false));
+			$me = json_decode(wp_remote_retrieve_body($result),true);
 			
 			if(is_array($me))
 			{
@@ -361,6 +360,22 @@ class Sideblogging {
 		echo '</select>';
 		echo '</td></tr>';
 		
+		if($options['shortener'] == 'bitly')
+		{
+			echo '<tr valign="top">
+			<th scope="row">
+			<label for="sideblogging_shortener_login">Bit.ly Login</label>
+			</th><td>';
+			echo '<input type="text" class="regular-text" value="'.$options['shortener_login'].'" name="sideblogging[shortener_login]" id="sideblogging_shortener_login" />';
+			echo '</td></tr>';
+					
+			echo '<tr valign="top">
+			<th scope="row">
+			<label for="sideblogging_shortener_password">Bit.ly API Key</label>
+			</th><td>';
+			echo '<input type="text" class="regular-text" value="'.$options['shortener_password'].'" name="sideblogging[shortener_password]" id="sideblogging_shortener_password" />';
+			echo ' (<a target="_blank" href="http://bit.ly/a/your_api_key">'.__('Find your key').'</a>)</td></tr>';
+		}
 		echo '</table>';
 		
 		echo '<h3>'.__('Applications Settings',self::domain).'</h3>';
@@ -454,7 +469,7 @@ class Sideblogging {
 		// Si on change les clés d'applications, oubliez la connexion
 		if($options_old['twitter_consumer_key'] != $options['twitter_consumer_key'] || $options_old['twitter_consumer_secret'] != $options['twitter_consumer_secret'])
 			$options['twitter_token'] = '';
-			
+
 		if($options_old['facebook_consumer_key'] != $options['facebook_consumer_key'] || $options_old['facebook_consumer_secret'] != $options['facebook_consumer_secret'])
 			$options['facebook_token'] = '';
 
@@ -463,9 +478,13 @@ class Sideblogging {
 		$options['twitter_consumer_secret'] = esc_attr($options['twitter_consumer_secret']);
 		$options['facebook_consumer_key'] = esc_attr($options['facebook_consumer_key']);
 		$options['facebook_consumer_secret'] = esc_attr($options['facebook_consumer_secret']);
-		$options['shortener'] = esc_attr($options['shortener']);
-		$options['purge'] = (ctype_digit($options['purge'])) ? intval($options['purge']) : 0;
 		
+		$options['shortener'] = esc_attr($options['shortener']);
+		$options['shortener_login'] = (isset($options['shortener_login'])) ? esc_attr($options['shortener_login']) : $options_old['shortener_login'];
+		$options['shortener_password'] = (isset($options['shortener_password'])) ? esc_attr($options['shortener_password']) : $options_old['shortener_password'];
+
+		$options['purge'] = (is_numeric($options['purge'])) ? intval($options['purge']) : 0;
+
 		$options = array_merge($options_old,$options);
 		return $options;
 	}

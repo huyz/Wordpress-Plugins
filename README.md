@@ -56,3 +56,8 @@ SideBlogging 0.5
 Affiche des articles courts dans la sidebar du blog.  
 [Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/sideblogging/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/sideblogging.zip)
 
+Skyrock Blog Importer 0.1
+------------------------
+Importe un Skyrock Blog dans Wordpress.  
+[Voir le code source](http://github.com/cedbv/Wordpress-Plugins/tree/master/skyrock-blog-importer/) - [Télécharger](http://github.com/cedbv/Wordpress-Plugins/raw/master/download/skyrock-blog-importer.zip)
+

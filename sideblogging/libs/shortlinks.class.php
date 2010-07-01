@@ -26,7 +26,7 @@ class Shortlinks {
 	function getSupportedServices() {
 		return array(
 			'isgd' => 'is.gd',
-			//'bitly' => 'bit.ly',
+			'bitly' => 'bit.ly',
 			'googl' => 'goo.gl',
 			'tinyurl' => 'tinyurl.com',
 			'supr' => 'su.pr',

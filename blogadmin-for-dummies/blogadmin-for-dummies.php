@@ -82,6 +82,8 @@ class AdminDummies {
 	function cron() {
 		global $wpdb;
 		// Efface les révisions
+		$wpdb->query("DELETE FROM $wpdb->postmeta JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->postmeta.post_id WHERE $wpdb->posts.post_type = 'revision'");
+		$wpdb->query("DELETE FROM $wpdb->term_relationships JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->term_relationships.object_id = $wpdb->posts.post_id WHERE $wpdb->posts.post_type = 'revision'");
 		$wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'revision'");
 		// Optimise les tables
 		$all_tables = $wpdb->get_results('SHOW TABLES',ARRAY_N);

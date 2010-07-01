@@ -166,3 +166,13 @@ msgstr "Totale lezingstijd:"
 msgid "Settings"
 msgstr ""
 
+#: poststats.php:236
+#@ post-stats
+msgid "Display statistics before each post"
+msgstr ""
+
+#: poststats.php:243
+#@ post-stats
+msgid "Display widget on dashboard"
+msgstr ""
+

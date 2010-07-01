@@ -44,7 +44,7 @@ class multiSiteSwitcher {
 
 		// Blogs de l'utilisateur actuel
 		global $current_user;
-		$blogs = get_blogs_of_user( $current_user->id );
+		$blogs = get_blogs_of_user( $current_user->id , true);
 
 		// Il faut plus d'un blog pour avoir le menu déroulant
 		if(count($blogs) <= 1)
@@ -67,7 +67,7 @@ class multiSiteSwitcher {
 		check_admin_referer('multisite-switcher');
 		// Comme sécurité basique, on vérifie que le blog sélectioné existe et est géré par l'utilisteur courant
 		global $current_user;
-		$blogs = get_blogs_of_user( $current_user->id );
+		$blogs = get_blogs_of_user( $current_user->id , true);
 		foreach($blogs as $blog)
 		{
 			if($blog->siteurl.'/wp-admin/' == $_POST['multisiteswitcher'])
