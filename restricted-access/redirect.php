@@ -42,6 +42,7 @@ if(isset($_POST['unlock']) AND is_array($_POST['unlock']))
 		if(isset($_POST['nom']))
 		{
 			$nom = strip_tags(stripslashes($_POST['nom']));
+			//$_SESSION['username'] = $nom;
 			if(!empty($nom))
 			{
 				if(restrictAccess::validate($_POST['reponse'],$reponses))

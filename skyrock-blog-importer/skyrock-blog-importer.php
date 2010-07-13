@@ -19,12 +19,12 @@
  * Along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-if ( !defined('WP_LOAD_IMPORTERS') )
-	return;
-	
-// Load Importer API
-require_once ABSPATH . 'wp-admin/includes/import.php';
-register_importer('skyrockblog', 'Skyrock Blog', 'Import <strong>posts, comments, images and videos</strong> from a Skyrock Blog.', 'skyrock_importer');
+
+if (defined('WP_LOAD_IMPORTERS'))
+{
+	require_once ABSPATH . 'wp-admin/includes/import.php';
+	register_importer('skyrockblog', 'Skyrock Blog', 'Import <strong>posts, comments, images and videos</strong> from a Skyrock Blog.', 'skyrock_importer');
+}
 
 function skyrock_importer() {
 	
@@ -116,8 +116,8 @@ function skyrock_importPage($blog,$page='') {
 		preg_match('#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im',$content[$i],$image);
 		if(!empty($image[2]))
 		{
-			if(skyrock_downloadImage($image[2]) !== false)
-				$image = skyrock_downloadImage($image[2]);
+			if(skyrock_downloadImage($image[2],$blog) !== false)
+				$image = skyrock_downloadImage($image[2],$blog);
 				if(strpos($image,'_small') !== false)
 					$multimedia = '<p><a href="'.str_replace('_small','',$image).'"><img class="aligncenter" src="'.$image.'" alt="" /></a></p>';
 				else
@@ -207,16 +207,16 @@ function skyrock_importComments($blog,$articleid,$wordpressid) {
 	return $nbcomment;
 }
 
-function skyrock_downloadImage($image) {
+function skyrock_downloadImage($image,$blog) {
 	$upload_dir = wp_upload_dir();
-	$upload_basedir = $upload_dir['basedir'].'/skyrock/';
+	$upload_basedir = $upload_dir['basedir'].'/skyrock-'.$blog.'/';
 	if(!is_dir($upload_basedir))
 		mkdir($upload_basedir);
 	
 	$filepath = $upload_basedir.basename($image);
 	
 	if(file_exists($filepath))
-		return $upload_dir['baseurl'].'/skyrock/'.basename($image);
+		return $upload_dir['baseurl'].'/skyrock-'.$blog.'/'.basename($image);
 		
 	$get = wp_get_http($image,$filepath);
 	
@@ -224,8 +224,8 @@ function skyrock_downloadImage($image) {
 	{
 		$image_orig = str_replace('_small','',$image,$count);
 		if($count == 1)
-			skyrock_downloadImage($image_orig);
-		return $upload_dir['baseurl'].'/skyrock/'.basename($image);
+			skyrock_downloadImage($image_orig,$blog);
+		return $upload_dir['baseurl'].'/skyrock-'.$blog.'/'.basename($image);
 	}
 	else
 		return false;	

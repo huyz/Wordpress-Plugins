@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SideBlogging v0.1\n"
+"Project-Id-Version: SideBlogging 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-12 18:47+0000\n"
-"Last-Translator: ced <ced@boverie.eu>\n"
+"POT-Creation-Date: 2010-07-09 21:33+0100\n"
+"PO-Revision-Date: 2010-07-09 21:34+0100\n"
+"Last-Translator: Cédric Boverie <ced@boverie.eu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,242 +13,280 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
-"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Textdomain-Support: yes"
 
+# @ sideblogging
+#: sideblogging.php:99
+msgid "Sideblogging help"
+msgstr "Aide de Sideblogging"
+
+# @ sideblogging
+#: sideblogging.php:100
+msgid "Create a Twitter application"
+msgstr "Créer une application Twitter"
+
+# @ sideblogging
+#: sideblogging.php:100
+#: sideblogging.php:101
+msgid "video tutorial"
+msgstr "tutoriel vidéo"
+
+# @ sideblogging
+#: sideblogging.php:101
+msgid "Create a Facebook application"
+msgstr "Créer une application Facebook"
+
+# @ sideblogging
+#: sideblogging.php:103
+msgid "About Facebook"
+msgstr "À propos de Facebook"
+
+# @ sideblogging
+#: sideblogging.php:104
+msgid "For Facebook, you may need to modify the URL Connect"
+msgstr "Pour Facebook, il peut être nécessaire de mofier le paramètre URL Connect"
+
+# @ sideblogging
+#: sideblogging.php:105
+msgid "To do:"
+msgstr "Pour se faire :"
+
+# @ sideblogging
 #: sideblogging.php:107
-#: sideblogging.php:477
+msgid "Go to application settings"
+msgstr "Modifier les paramètres de l'application"
+
+# @ sideblogging
+#: sideblogging.php:108
+msgid "Go to section <em>Connection</em>"
+msgstr "Allez dans la rubrique <em>Connexion</em>"
+
+# @ sideblogging
+#: sideblogging.php:109
+#, php-format
+msgid "Put %s in the field URL Connect"
+msgstr "Metttez %s dans le champ URL Connect"
+
+# @ sideblogging
+#: sideblogging.php:116
+#: sideblogging.php:559
 #: sideblogging_Widget.php:49
-#@ sideblogging
 msgid "Asides"
 msgstr "Brèves"
 
-#: sideblogging.php:478
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:125
+msgid "characters left"
+msgstr "caractères restants"
+
+# @ sideblogging
+#: sideblogging.php:127
+msgid "Add additional content"
+msgstr "Ajouter du contenu additionnel"
+
+# @ sideblogging
+#: sideblogging.php:151
+msgid "Aside published"
+msgstr "Brève publiée"
+
+# @ sideblogging
+#: sideblogging.php:161
+msgid "An error occurred"
+msgstr "Une erreur est survenue"
+
+# @ sideblogging
+#: sideblogging.php:218
+msgid "Twitter is currently unavailable. Please check your keys or try again later."
+msgstr "Twitter est indisponible pour le moment. Veuillez vérifier vos clés ou ré-essayer plus tard."
+
+# @ sideblogging
+#: sideblogging.php:330
+msgid "Twitter account registered"
+msgstr "Compte Twitter enregistré"
+
+# @ sideblogging
+#: sideblogging.php:333
+msgid "Error during the connection with Twitter"
+msgstr "Une erreur est survenue pendant la connexion avec Twitter"
+
+# @ sideblogging
+#: sideblogging.php:357
+msgid "Facebook account registered"
+msgstr "Compte Facebook enregistré"
+
+# @ sideblogging
+#: sideblogging.php:360
+msgid "Error during the connection with Facebook"
+msgstr "Une erreur est survenue pendant la connexion avec Facebook"
+
+# @ sideblogging
+#: sideblogging.php:375
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#: sideblogging.php:381
+msgid "Allow comments "
+msgstr "Autoriser les commentaires"
+
+# @ sideblogging
+#: sideblogging.php:391
+msgid "Purge asides older than "
+msgstr "Purger les brèves de plus de"
+
+# @ sideblogging
+#: sideblogging.php:394
+msgid "days"
+msgstr "jours"
+
+# @ sideblogging
+#: sideblogging.php:394
+msgid "0 for keeping asides forever"
+msgstr "0 pour conserver les brèves indéfiniment"
+
+# @ sideblogging
+#: sideblogging.php:398
+msgid "Url shortener"
+msgstr "Raccourcisseur d'url"
+
+# @ sideblogging
+#: sideblogging.php:423
+msgid "Find your key"
+msgstr "Trouver votre clé"
+
+# @ sideblogging
+#: sideblogging.php:427
+msgid "Applications Settings"
+msgstr "Paramètres des applications"
+
+# @ sideblogging
+#: sideblogging.php:460
+msgid "Don't forget to look at the contextual help (in the top right of page) for more informations about keys."
+msgstr "N'oubliez pas de consulter l'aide contextuelle (en haut à droite de la page) pour plus d'informations sur ces clés."
+
+#: sideblogging.php:461
+msgid "Save Changes"
+msgstr ""
+
+# @ sideblogging
+#: sideblogging.php:465
+msgid "Republish on Twitter"
+msgstr "Republier sur Twitter"
+
+# @ sideblogging
+#: sideblogging.php:469
+msgid "Sorry, at this time you need Curl to connect with Twitter"
+msgstr "Désolé. Pour le moment, Curl est nécessaire pour la connexion à Twitter"
+
+# @ sideblogging
+#: sideblogging.php:473
+msgid "You must configure Twitter app to be able to sign-in"
+msgstr "Vous devez configurer l'application Twitter pour pouvoir vous connecter"
+
+# @ sideblogging
+#: sideblogging.php:477
+msgid "To automatically publish your asides on Twitter, sign-in below:"
+msgstr "Pour publier automatiquement vos brèves sur Twitter, connectez-vous ci-desous :"
+
+# @ sideblogging
+#: sideblogging.php:484
+#, php-format
+msgid "You are connected to Twitter as %s"
+msgstr "Vous êtes connectés à Twitter en tant que %s"
+
+# @ sideblogging
+#: sideblogging.php:485
+#: sideblogging.php:509
+msgid "Change account or disable"
+msgstr "Changer de compte ou désactiver"
+
+# @ sideblogging
+#: sideblogging.php:489
+msgid "Republish on Facebook"
+msgstr "Republier sur Facebook"
+
+# @ sideblogging
+#: sideblogging.php:493
+msgid "Sorry, you need OpenSLL to connect with Facebook"
+msgstr "Désolé. OpenSSL est nécessaire pour la connexion à Facebook"
+
+# @ sideblogging
+#: sideblogging.php:497
+msgid "You must configure Facebook app to be able to sign-in"
+msgstr "Vous devez configurer l'application Facebook pour pouvoir vous connecter"
+
+# @ sideblogging
+#: sideblogging.php:501
+msgid "To automatically publish your asides on Facebook, sign-in below:"
+msgstr "Pour publier automatiquement vos brèves sur Facebook, connectez-vous ci-desous :"
+
+# @ sideblogging
+#: sideblogging.php:508
+#, php-format
+msgid "You are connected to Facebook as %s"
+msgstr "Vous êtes connectés à Facebook en tant que %s"
+
+# @ sideblogging
+#: sideblogging.php:560
 msgid "Aside"
 msgstr "Brève"
 
-#: sideblogging.php:485
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:567
 msgid "Add new aside"
 msgstr "Ajouter une nouvelle brève"
 
-#: sideblogging.php:486
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:568
 msgid "Edit aside"
 msgstr "Modifier la brève"
 
-#: sideblogging.php:487
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:569
 msgid "No aside found"
 msgstr "Aucune brève trouvée"
 
-#: sideblogging.php:488
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:570
 msgid "No aside found in trash"
 msgstr "Aucune brève trouvée dans la corbeille"
 
-#: sideblogging.php:489
-#@ sideblogging
+# @ sideblogging
+#: sideblogging.php:571
 msgid "Search asides"
 msgstr "Chercher dans les brèves"
+
+# @ sideblogging
+#: sideblogging_Widget.php:8
+msgid "Display asides in a widget"
+msgstr "Affiche les brèves dans un widget"
 
 #: sideblogging_Widget.php:22
 msgid "Title:"
 msgstr ""
 
+# @ sideblogging
 #: sideblogging_Widget.php:26
-#@ sideblogging
 msgid "Number of asides to display:"
 msgstr "Nombre de brèves à afficher :"
 
-#: sideblogging_Widget.php:8
-#@ sideblogging
-msgid "Display asides in a widget"
-msgstr "Affiche les brèves dans un widget"
+#~ msgid "SideBlogging"
+#~ msgstr "Sideblogging"
 
-#: sideblogging.php:120
-msgid "Publish"
-msgstr ""
+#~ msgid "http://wordpress.org/extend/plugins/sideblogging/"
+#~ msgstr "http://blog.boverie.eu/"
 
-#: sideblogging.php:400
-msgid "Save Changes"
-msgstr ""
+#~ msgid ""
+#~ "Display asides in a widget. They can automatically be published to "
+#~ "Twitter and Facebook."
+#~ msgstr ""
+#~ "Afficher des brèves dans un widget. Ils peuvent être publié "
+#~ "automatiquement sur Twitter et Facebook."
 
-#: sideblogging.php:91
-#@ sideblogging
-msgid "Sideblogging help"
-msgstr "Aide de Sideblogging"
+#~ msgid "Cédric Boverie"
+#~ msgstr "Cédric Boverie"
 
-#: sideblogging.php:92
-#@ sideblogging
-msgid "Create a Twitter application"
-msgstr "Créer une application Twitter"
-
-#: sideblogging.php:93
-#@ sideblogging
-msgid "Create a Facebook application"
-msgstr "Créer une application Facebook"
-
-#: sideblogging.php:95
-#@ sideblogging
-msgid "About Facebook"
-msgstr "À propos de Facebook"
-
-#: sideblogging.php:116
-#@ sideblogging
-msgid "characters left"
-msgstr "caractères restants"
-
-#: sideblogging.php:118
-#@ sideblogging
-msgid "Add additional content"
-msgstr "Ajouter du contenu additionnel"
-
-#: sideblogging.php:142
-#@ sideblogging
-msgid "Aside published"
-msgstr "Brève publiée"
-
-#: sideblogging.php:152
-#@ sideblogging
-msgid "An error occurred"
-msgstr "Une erreur est survenue"
-
-#: sideblogging.php:209
-#@ sideblogging
-msgid "Twitter is currently unavailable. Please check your keys or try again later."
-msgstr "Twitter est indisponible pour le moment. Veuillez vérifier vos clés ou ré-essayer plus tard."
-
-#: sideblogging.php:290
-#@ sideblogging
-msgid "Twitter account registered"
-msgstr "Compte Twitter enregistré"
-
-#: sideblogging.php:293
-#@ sideblogging
-msgid "Error during the connection with Twitter"
-msgstr "Une erreur est survenue pendant la connexion avec Twitter"
-
-#: sideblogging.php:322
-#@ sideblogging
-msgid "Facebook account registered"
-msgstr "Compte Facebook enregistré"
-
-#: sideblogging.php:325
-#@ sideblogging
-msgid "Error during the connection with Facebook"
-msgstr "Une erreur est survenue pendant la connexion avec Facebook"
-
-#: sideblogging.php:366
-#@ sideblogging
-msgid "Applications Settings"
-msgstr "Paramètres des applications"
-
-#: sideblogging.php:399
-#@ sideblogging
-msgid "Don't forget to look at the contextual help (in the top right of page) for more informations about keys."
-msgstr "N'oubliez pas de consulter l'aide contextuelle (en haut à droite de la page) pour plus d'informations sur ces clés."
-
-#: sideblogging.php:404
-#@ sideblogging
-msgid "Republish on Twitter"
-msgstr "Republier sur Twitter"
-
-#: sideblogging.php:408
-#@ sideblogging
-msgid "You must configure Twitter app to be able to sign-in"
-msgstr "Vous devez configurer l'application Twitter pour pouvoir vous connecter"
-
-#: sideblogging.php:412
-#@ sideblogging
-msgid "To automatically publish your asides on Twitter, sign-in below:"
-msgstr "Pour publier automatiquement vos brèves sur Twitter, connectez-vous ci-desous :"
-
-#: sideblogging.php:424
-#@ sideblogging
-msgid "Republish on Facebook"
-msgstr "Republier sur Facebook"
-
-#: sideblogging.php:428
-#@ sideblogging
-msgid "You must configure Facebook app to be able to sign-in"
-msgstr "Vous devez configurer l'application Facebook pour pouvoir vous connecter"
-
-#: sideblogging.php:432
-#@ sideblogging
-msgid "To automatically publish your asides on Facebook, sign-in below:"
-msgstr "Pour publier automatiquement vos brèves sur Facebook, connectez-vous ci-desous :"
-
-#: sideblogging.php:96
-#@ sideblogging
-msgid "For Facebook, you may need to modify the URL Connect"
-msgstr "Pour Facebook, il peut être nécessaire de mofier le paramètre URL Connect"
-
-#: sideblogging.php:97
-#@ sideblogging
-msgid "To do:"
-msgstr "Pour se faire :"
-
-#: sideblogging.php:99
-#@ sideblogging
-msgid "Go to application settings"
-msgstr "Modifier les paramètres de l'application"
-
-#: sideblogging.php:100
-#@ sideblogging
-msgid "Go to section <em>Connection</em>"
-msgstr "Allez dans la rubrique <em>Connexion</em>"
-
-#: sideblogging.php:101
-#, php-format
-#@ sideblogging
-msgid "Put %s in the field URL Connect"
-msgstr "Metttez %s dans le champ URL Connect"
-
-#: sideblogging.php:419
-#, php-format
-#@ sideblogging
-msgid "You are connected to Twitter as %s"
-msgstr "Vous êtes connectés à Twitter en tant que %s"
-
-#: sideblogging.php:420
-#: sideblogging.php:440
-#@ sideblogging
-msgid "Change account or disable"
-msgstr "Changer de compte ou désactiver"
-
-#: sideblogging.php:439
-#, php-format
-#@ sideblogging
-msgid "You are connected to Facebook as %s"
-msgstr "Vous êtes connectés à Facebook en tant que %s"
-
-#: sideblogging.php:346
-#@ sideblogging
-msgid "Purge asides older than "
-msgstr "Purger les brèves de plus de"
-
-#: sideblogging.php:349
-#@ sideblogging
-msgid "days"
-msgstr "jours"
-
-#: sideblogging.php:349
-#@ sideblogging
-msgid "0 for keeping asides forever"
-msgstr "0 pour conserver les brèves indéfiniment"
-
-#: sideblogging.php:340
-#@ sideblogging
-msgid "General Settings"
-msgstr "Paramètres généraux"
-
-#: sideblogging.php:353
-#@ sideblogging
-msgid "Url shortener"
-msgstr "Raccourcisseur d'url"
-
+#~ msgid "http://www.boverie.eu/"
+#~ msgstr "http://www.boverie.eu/"

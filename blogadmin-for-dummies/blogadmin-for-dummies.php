@@ -29,7 +29,7 @@ if(!class_exists('AdminDummies')):
 class AdminDummies {
 
 	// ID des utilisateurs (conçu pour les administrateurs) à modérer
-	var $dummies_admin = array(1);
+	var $dummies_admin = array();
 
 	function __construct() {
 		// Définir l'action que exécute la tâche planifiée

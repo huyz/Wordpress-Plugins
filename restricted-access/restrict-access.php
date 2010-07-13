@@ -45,6 +45,7 @@ class restrictAccess {
 		}
 	}
 	
+	
 	// Register settings
 	function register_settings() {
 		register_setting('restrictAccess_settings','restrictAccess',array(&$this,'filter_options'));
@@ -148,6 +149,15 @@ class restrictAccess {
 	/* Ajout de la page de l'énigme, sauf sur le flux rss */
 	public function init() {
 		$options = get_option('restrictAccess');
+		// Activer les sessions sur la partie client
+		/*
+		if(!is_admin())
+		{
+			if(!session_id())
+				session_start();
+		}
+		print_r($_SESSION);exit;
+		*/
 		// Flux RSS
 		if(is_feed())
 		{

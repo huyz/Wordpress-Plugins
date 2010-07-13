@@ -3,7 +3,7 @@
  * Plugin Name: Multisite Switcher
  * Plugin URI: http://github.com/cedbv/Wordpress-Plugins
  * Description: Fast switch between sites administration installed on the same "network".
- * Version: 0.1
+ * Version: 1.0
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
 */
@@ -65,7 +65,7 @@ class multiSiteSwitcher {
 	
 	function redirect_to_selected_admin() {
 		check_admin_referer('multisite-switcher');
-		// Comme sécurité basique, on vérifie que le blog sélectioné existe et est géré par l'utilisteur courant
+		// Comme sécurité basique (et limite inutile), on vérifie que le blog sélectioné existe et est géré par l'utilisteur courant
 		global $current_user;
 		$blogs = get_blogs_of_user( $current_user->id , true);
 		foreach($blogs as $blog)

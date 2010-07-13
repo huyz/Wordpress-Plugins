@@ -1,0 +1,237 @@
+# Translation of the WordPress plugin SideBlogging 0.1 by Cédric Boverie.
+# Copyright (C) 2010 Cédric Boverie
+# This file is distributed under the same license as the SideBlogging package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SideBlogging 0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/sideblogging\n"
+"POT-Creation-Date: 2010-07-03 22:40+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: sideblogging.php:98
+msgid "Sideblogging help"
+msgstr ""
+
+#: sideblogging.php:99
+msgid "Create a Twitter application"
+msgstr ""
+
+#: sideblogging.php:99 sideblogging.php:100
+msgid "video tutorial"
+msgstr ""
+
+#: sideblogging.php:100
+msgid "Create a Facebook application"
+msgstr ""
+
+#: sideblogging.php:102
+msgid "About Facebook"
+msgstr ""
+
+#: sideblogging.php:103
+msgid "For Facebook, you may need to modify the URL Connect"
+msgstr ""
+
+#: sideblogging.php:104
+msgid "To do:"
+msgstr ""
+
+#: sideblogging.php:106
+msgid "Go to application settings"
+msgstr ""
+
+#: sideblogging.php:107
+msgid "Go to section <em>Connection</em>"
+msgstr ""
+
+#: sideblogging.php:108
+#, php-format
+msgid "Put %s in the field URL Connect"
+msgstr ""
+
+#: sideblogging.php:114 sideblogging.php:530 sideblogging_Widget.php:49
+msgid "Asides"
+msgstr ""
+
+#: sideblogging.php:123
+msgid "characters left"
+msgstr ""
+
+#: sideblogging.php:125
+msgid "Add additional content"
+msgstr ""
+
+#: sideblogging.php:127
+msgid "Publish"
+msgstr ""
+
+#: sideblogging.php:149
+msgid "Aside published"
+msgstr ""
+
+#: sideblogging.php:159
+msgid "An error occurred"
+msgstr ""
+
+#: sideblogging.php:216
+msgid ""
+"Twitter is currently unavailable. Please check your keys or try again later."
+msgstr ""
+
+#: sideblogging.php:328
+msgid "Twitter account registered"
+msgstr ""
+
+#: sideblogging.php:331
+msgid "Error during the connection with Twitter"
+msgstr ""
+
+#: sideblogging.php:355
+msgid "Facebook account registered"
+msgstr ""
+
+#: sideblogging.php:358
+msgid "Error during the connection with Facebook"
+msgstr ""
+
+#: sideblogging.php:373
+msgid "General Settings"
+msgstr ""
+
+#: sideblogging.php:379
+msgid "Purge asides older than "
+msgstr ""
+
+#: sideblogging.php:382
+msgid "days"
+msgstr ""
+
+#: sideblogging.php:382
+msgid "0 for keeping asides forever"
+msgstr ""
+
+#: sideblogging.php:386
+msgid "Url shortener"
+msgstr ""
+
+#: sideblogging.php:411
+msgid "Find your key"
+msgstr ""
+
+#: sideblogging.php:415
+msgid "Applications Settings"
+msgstr ""
+
+#: sideblogging.php:448
+msgid ""
+"Don't forget to look at the contextual help (in the top right of page) for "
+"more informations about keys."
+msgstr ""
+
+#: sideblogging.php:449
+msgid "Save Changes"
+msgstr ""
+
+#: sideblogging.php:453
+msgid "Republish on Twitter"
+msgstr ""
+
+#: sideblogging.php:457
+msgid "You must configure Twitter app to be able to sign-in"
+msgstr ""
+
+#: sideblogging.php:461
+msgid "To automatically publish your asides on Twitter, sign-in below:"
+msgstr ""
+
+#: sideblogging.php:468
+#, php-format
+msgid "You are connected to Twitter as %s"
+msgstr ""
+
+#: sideblogging.php:469 sideblogging.php:489
+msgid "Change account or disable"
+msgstr ""
+
+#: sideblogging.php:473
+msgid "Republish on Facebook"
+msgstr ""
+
+#: sideblogging.php:477
+msgid "You must configure Facebook app to be able to sign-in"
+msgstr ""
+
+#: sideblogging.php:481
+msgid "To automatically publish your asides on Facebook, sign-in below:"
+msgstr ""
+
+#: sideblogging.php:488
+#, php-format
+msgid "You are connected to Facebook as %s"
+msgstr ""
+
+#: sideblogging.php:531
+msgid "Aside"
+msgstr ""
+
+#: sideblogging.php:538
+msgid "Add new aside"
+msgstr ""
+
+#: sideblogging.php:539
+msgid "Edit aside"
+msgstr ""
+
+#: sideblogging.php:540
+msgid "No aside found"
+msgstr ""
+
+#: sideblogging.php:541
+msgid "No aside found in trash"
+msgstr ""
+
+#: sideblogging.php:542
+msgid "Search asides"
+msgstr ""
+
+#: sideblogging_Widget.php:8
+msgid "Display asides in a widget"
+msgstr ""
+
+#: sideblogging_Widget.php:22
+msgid "Title:"
+msgstr ""
+
+#: sideblogging_Widget.php:26
+msgid "Number of asides to display:"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "SideBlogging"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/sideblogging/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Display asides in a widget. They can automatically be published to Twitter "
+"and Facebook."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Cédric Boverie"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.boverie.eu/"
+msgstr ""

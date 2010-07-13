@@ -3,7 +3,7 @@
  * Plugin Name: Post Stats
  * Plugin URI: http://blog.boverie.eu/poststats-statistiques-des-articles/
  * Description: Statistics about posts length and reading time on dashboard and more.
- * Version: 1.0.1
+ * Version: 1.1
  * Author: Cédric Boverie
  * Author URI: http://www.boverie.eu/
  */
@@ -69,6 +69,12 @@ class PostStats {
 
 	// Create the function to output the content of the widget
 	function diplay_stats() {
+		if(false !== ($content = get_transient('poststats_widget')))
+		{
+			echo $content;
+			return;
+		}
+	
 		global $wpdb;
 		$options = get_option('poststats');
 		$nb_mots_totaux = $wpdb->get_var("SELECT SUM(LENGTH(post_content) - LENGTH(REPLACE(post_content,' ',''))+1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post'");
@@ -88,25 +94,28 @@ class PostStats {
 		GROUP BY ID
 		ORDER BY NB_MOTS LIMIT 1");
 
-			echo '<p>';
-		echo __('Sum:',POSTSTATS_TEXTDOMAIN).' '.round($nb_mots_totaux).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
-		echo __('Minimum:',POSTSTATS_TEXTDOMAIN).' '.round($shortest->NB_MOTS).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
-		echo __('Maximum:',POSTSTATS_TEXTDOMAIN).' '.round($longest->NB_MOTS).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
-		echo __('Average:',POSTSTATS_TEXTDOMAIN).' '.round($nb_mots_avg).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
+		$content = '<p>';
+		$content .= __('Sum:',POSTSTATS_TEXTDOMAIN).' '.round($nb_mots_totaux).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
+		$content .= __('Minimum:',POSTSTATS_TEXTDOMAIN).' '.round($shortest->NB_MOTS).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
+		$content .= __('Maximum:',POSTSTATS_TEXTDOMAIN).' '.round($longest->NB_MOTS).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
+		$content .= __('Average:',POSTSTATS_TEXTDOMAIN).' '.round($nb_mots_avg).' '.__('words',POSTSTATS_TEXTDOMAIN).'<br />';
 		'</p>';
 
-		echo '<p>';
+		$content .= '<p>';
 		if(is_object($longest))
-				echo __('Longest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($longest->ID).'">'.$longest->post_title.'</a><br />';
+				$content .= __('Longest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($longest->ID).'">'.$longest->post_title.'</a><br />';
 		if(is_object($shortest))
-				echo __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
-		echo '</p>';
+				$content .= __('Shortest post:',POSTSTATS_TEXTDOMAIN).' <a href="'.get_permalink($shortest->ID).'">'.$shortest->post_title.'</a><br />';
+		$content .= '</p>';
 
-			$reading_time = PostStats::format_time($nb_mots_totaux/$options['speed']*60);
+		$reading_time = PostStats::format_time($nb_mots_totaux/$options['speed']*60);
 
-			echo '<p>';
-			echo __('Total reading time:',POSTSTATS_TEXTDOMAIN).' '.$reading_time.'.';
-			echo '</p>';
+		$content .= '<p>';
+		$content .= __('Total reading time:',POSTSTATS_TEXTDOMAIN).' '.$reading_time.'.';
+		$content .= '</p>';
+
+		set_transient('poststats_widget',$content, 86400);
+		echo $content;
 	}
 
 	// Transforme un temps en secondes en un temps compréhensible par un humain
@@ -223,6 +232,7 @@ class PostStats {
 
 	/* Options page */
 	function options_page() {
+		delete_transient('poststats_widget');
 		echo '<div class="wrap">';
 		echo '<h2>'.__('Posts Statistics',POSTSTATS_TEXTDOMAIN).'</h2>';
 

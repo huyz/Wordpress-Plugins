@@ -196,8 +196,27 @@ class TwitterOAuth {
    */
   function http($url, $method, $postfields = NULL) {
     $this->http_info = array();
+	
+	$options = array(
+		'method' => $method,
+		'timeout' => $this->timeout,
+		'user-agent' => $this->useragent,
+		'sslverify' => $this->ssl_verifypeer,
+	);
+	
+	if($postfields)
+		$options['body'] = $postfields;
+
+	$response = wp_remote_request($url,$options);
+	
+	$this->http_code = wp_remote_retrieve_response_code($response);
+	$this->http_info = array_merge($this->http_info, wp_remote_retrieve_headers($response));
+	$this->url = $url;
+	
+	return wp_remote_retrieve_body($response);
+	
+	/*
     $ci = curl_init();
-    /* Curl settings */
     curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
     curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout);
     curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
@@ -227,7 +246,9 @@ class TwitterOAuth {
     $this->http_info = array_merge($this->http_info, curl_getinfo($ci));
     $this->url = $url;
     curl_close ($ci);
+	
     return $response;
+	*/
   }
 
   /**
