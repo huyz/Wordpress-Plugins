@@ -53,10 +53,11 @@ class multiSiteSwitcher {
 		$current_blogurl = get_bloginfo('url');
 		echo '<form style="float:left;min-width:150px;margin:10px 0 0 40px;" action="" method="post">';
 		wp_nonce_field('multisite-switcher');
+                echo 'My Sites: ';
 		echo '<select onchange="location.href=this.value;" id="multisiteswitcher" name="multisiteswitcher">';
 		foreach($blogs as $blog)
 		{
-			echo '<option '.selected($blog->siteurl,$current_blogurl,false).' value="'.$blog->siteurl.'/wp-admin/">'.$blog->blogname.'</option>';
+                        echo '<option '.selected($blog->siteurl,$current_blogurl,false).' value="'.esc_url(get_admin_url($blog->userblog_id)).'">'.$blog->blogname.'</option>';
 		}
 		echo '</select>';
 		echo '<noscript> <input class="button-secondary action" type="submit" value="Go"/></noscript>';
