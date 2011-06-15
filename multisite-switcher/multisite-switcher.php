@@ -53,7 +53,7 @@ class multiSiteSwitcher {
 		$current_blogurl = get_bloginfo('url');
 		echo '<form style="float:left;min-width:150px;margin:10px 0 0 40px;" action="" method="post">';
 		wp_nonce_field('multisite-switcher');
-                echo 'My Sites: ';
+                echo 'Switch Backend: ';
 		echo '<select onchange="location.href=this.value;" id="multisiteswitcher" name="multisiteswitcher">';
 		foreach($blogs as $blog)
 		{
